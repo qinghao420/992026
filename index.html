@@ -3,112 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>官方服务入口</title>
-
+<title>欧信官方下载</title>
 <style>
-body {
+*{
   margin: 0;
   padding: 0;
-  background: #f4f6fb;
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial;
+  box-sizing: border-box;
 }
-
-.container {
+body {
   min-height: 100vh;
+  background-color: #0c0c0c;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  font-family: "Microsoft YaHei",PingFang SC,sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding:20px;
 }
-
-.box {
-  background: #fff;
-  width: 92%;
-  max-width: 420px;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.08);
-  padding: 18px;
+.wrap{
+  width: 100%;
+  max-width: 520px;
 }
-
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
+.top-card{
+  background-color: #18140e;
+  border:1px solid #3a3324;
+  border-radius:16px;
+  padding:30px 20px;
+  text-align:center;
+  margin-bottom:20px;
 }
-
-.desc {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 14px;
+.top-tag{
+  font-size:14px;
+  color:#d4bc84;
+  letter-spacing:1px;
+  border:1px solid #d4bc8470;
+  display:inline-block;
+  padding:4px 14px;
+  border-radius:20px;
+  margin-bottom:12px;
 }
-
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 0;
-  border-bottom: 1px solid #eee;
+.top-card h1{
+  font-size:32px;
+  color:#e6cd90;
+  font-weight:normal;
+  letter-spacing:2px;
 }
-
-.item:last-child {
-  border-bottom: none;
+.top-card p{
+  color:#b8a882;
+  font-size:14px;
+  line-height:1.7;
+  margin-top:8px;
 }
-
-.left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.main-card{
+  background-color:#18140e;
+  border:1px solid #3a3324;
+  border-radius:16px;
+  padding:36px 26px;
+  text-align:center;
 }
-
-.left img {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+.download-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-
-.left span {
-  font-size: 16px;
+.left-group{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
-
-.btn {
-  background: #4f6ef7;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 22px;
-  text-decoration: none;
-  font-size: 15px;
-  white-space: nowrap;
+.icon-box{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  background:#272218;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#e6cd90;
+  font-size:22px;
+  border:1px solid #443c2c;
+}
+.text-name{
+  color:#e2d3ad;
+  font-size:16px;
+}
+.gold-btn{
+  padding:10px 26px;
+  background:linear-gradient(180deg,#c9b278,#998450);
+  color:#000;
+  border:none;
+  border-radius:24px;
+  font-size:15px;
+  text-decoration:none;
+  font-weight:500;
+  white-space:nowrap;
+}
+.gold-btn:hover{
+  filter: brightness(1.1);
+}
+.bottom-tips{
+  text-align:center;
+  margin-top:24px;
+  color:#887c64;
+  font-size:12px;
 }
 </style>
 </head>
-
 <body>
-<div class="container">
-  <div class="box">
-
-   <div class="title">官方服务入口</div>
-<div class="desc">
-  请选择您需要访问的官方服务
-</div>
-<div class="official-title">
-  欧信官方网站：ouxin.org
-</div>
-
-
-    
-   <!-- 欧信 -->
-<div class="item">
-  <div class="left">
-    <img src="ouxin.png">
-    <span>欧信官方服务</span>
+<div class="wrap">
+  <div class="top-card">
+    <div class="top-tag">OFFICIAL SERVICE</div>
+    <h1>官方服务中心</h1>
+    <p>欧信APP官方下载通道</p>
   </div>
-  <a class="btn" href="98000.vip" target="_blank" rel="noopener noreferrer">
-    立即访问
-  </a>
-</div>
 
+  <div class="main-card">
+    <div class="download-row">
+      <div class="left-group">
+        <div class="icon-box">📱</div>
+        <span class="text-name">欧信APP下载</span>
+      </div>
+      <!-- 下载链接，目标网址 -->
+      <a href="https://98000.vip" target="_blank" class="gold-btn">立即下载</a>
+    </div>
+  </div>
 
-    
-
+  <div class="bottom-tips">
+    请认准官方服务渠道，谨防非官方联系方式。
   </div>
 </div>
 </body>
