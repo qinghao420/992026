@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 优化viewport，禁止缩放，解决iOS基础兼容 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>欧信官方下载</title>
 <style>
 *{
@@ -10,6 +11,7 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /*消除点击300ms延迟*/
 }
 body {
   min-height: 100vh;
@@ -28,7 +30,7 @@ body {
   max-width: 520px;
   display: none;
 }
-/* 密码弹窗样式 */
+/* 密码弹窗样式：增加iOS硬件加速，修复fixed焦点bug */
 .password-mask{
   position:fixed;
   inset:0;
@@ -37,6 +39,8 @@ body {
   align-items:center;
   justify-content:center;
   z-index:9999;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .password-box{
   width:90%;
@@ -46,6 +50,8 @@ body {
   border-radius:16px;
   padding:36px 26px;
   text-align:center;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .password-box h3{
   color:#e6cd90;
@@ -62,6 +68,7 @@ body {
   font-size:16px;
   outline:none;
   margin-bottom:16px;
+  touch-action: manipulation;
 }
 #pwd-input:focus{
   border-color:#d4bc84;
@@ -179,7 +186,8 @@ body {
 <div class="password-mask" id="pwdMask">
   <div class="password-box">
     <h3>请输入访问密码</h3>
-    <input type="password" id="pwd-input" placeholder="提示：6668">
+    <!-- 关闭自动填充，解决苹果密码检索卡顿（核心修复） -->
+    <input type="password" id="pwd-input" placeholder="提示：6668" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
     <div class="tip-error" id="errTip">密码错误，请重新输入</div>
   </div>
@@ -198,7 +206,7 @@ body {
     <div class="download-row">
       <div class="left-group">
         <div class="icon-box">
-  <img src="ouxin2.png" style="width:28px;height:28px;object-fit:contain;">
+  <img src="ouxin2.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
 </div>
         <span class="text-name">欧信APP下载</span>
       </div>
@@ -209,7 +217,7 @@ body {
     <div class="download-row">
       <div class="left-group">
         <div class="icon-box">
-  <img src="ouya.png" style="width:28px;height:28px;object-fit:contain;">
+  <img src="bat.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
 </div>
         <span class="text-name">欧亚游戏APP下载</span>
       </div>
@@ -220,7 +228,7 @@ body {
     <div class="download-row">
       <div class="left-group">
         <div class="icon-box">
-  <img src="ouya.png" style="width:28px;height:28px;object-fit:contain;">
+  <img src="bat.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
 </div>
         <span class="text-name">电脑端游戏入口</span>
       </div>
@@ -247,11 +255,19 @@ function checkPassword(){
   }
 }
 // 回车快捷登录
-document.getElementById('pwd-input').addEventListener('keydown',function(e){
+const pwdInput = document.getElementById('pwd-input');
+pwdInput.addEventListener('keydown',function(e){
   if(e.key === 'Enter') checkPassword();
 })
+// 修复iOS焦点乱窜导致地址栏乱码：弹窗点击空白区域不让焦点乱跑
+document.getElementById('pwdMask').addEventListener('click',function(e){
+  if(e.target === this){
+    pwdInput.blur();
+  }
+})
 </script>
- <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+<!-- 统计脚本增加defer，不阻塞页面交互 -->
+ <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer></script>
 <script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script> 
 </body>
 </html>
