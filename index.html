@@ -9,6 +9,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   min-height: 100vh;
@@ -25,7 +26,64 @@ body {
 .wrap{
   width: 100%;
   max-width: 520px;
+  display: none;
 }
+/* 密码弹窗样式 */
+.password-mask{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.password-box{
+  width:90%;
+  max-width:400px;
+  background-color:#18140e;
+  border:1px solid #3a3324;
+  border-radius:16px;
+  padding:36px 26px;
+  text-align:center;
+}
+.password-box h3{
+  color:#e6cd90;
+  font-size:22px;
+  margin-bottom:24px;
+}
+#pwd-input{
+  width:100%;
+  padding:14px 16px;
+  background:#111;
+  border:1px solid #443c2c;
+  border-radius:10px;
+  color:#fff;
+  font-size:16px;
+  outline:none;
+  margin-bottom:16px;
+}
+#pwd-input:focus{
+  border-color:#d4bc84;
+}
+.submit-pwd{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(180deg,#c9b278,#998450);
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  color:#000;
+  font-weight:500;
+  cursor:pointer;
+}
+.tip-error{
+  color:#ff7777;
+  margin-top:12px;
+  font-size:14px;
+  display:none;
+}
+
 .top-card{
   background-color: #18140e;
   border:1px solid #3a3324;
@@ -112,6 +170,16 @@ body {
 </style>
 </head>
 <body>
+<!-- 密码弹窗 -->
+<div class="password-mask" id="pwdMask">
+  <div class="password-box">
+    <h3>请输入访问密码</h3>
+    <input type="password" id="pwd-input" placeholder="提示：6668">
+    <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
+    <div class="tip-error" id="errTip">密码错误，请重新输入</div>
+  </div>
+</div>
+
 <div class="wrap">
   <div class="top-card">
     <div class="top-tag">OFFICIAL SERVICE</div>
@@ -137,5 +205,24 @@ body {
     请认准官方服务渠道，谨防非官方联系方式。
   </div>
 </div>
+
+<script>
+// 访问密码
+const AccessPassword = "6668";
+function checkPassword(){
+  const inputVal = document.getElementById('pwd-input').value;
+  const errTip = document.getElementById('errTip');
+  if(inputVal === AccessPassword){
+    document.getElementById('pwdMask').style.display = 'none';
+    document.querySelector('.wrap').style.display = 'block';
+  }else{
+    errTip.style.display = 'block';
+  }
+}
+// 回车快捷登录
+document.getElementById('pwd-input').addEventListener('keydown',function(e){
+  if(e.key === 'Enter') checkPassword();
+})
+</script>
 </body>
 </html>
