@@ -10,6 +10,7 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 body {
   min-height: 100vh;
@@ -37,6 +38,7 @@ body {
   align-items:center;
   justify-content:center;
   z-index:9999;
+  -webkit-transform: translateZ(0);
 }
 .password-box{
   width:90%;
@@ -62,6 +64,7 @@ body {
   font-size:16px;
   outline:none;
   margin-bottom:16px;
+  touch-action: manipulation;
 }
 #pwd-input:focus{
   border-color:#d4bc84;
@@ -179,7 +182,7 @@ body {
 <div class="password-mask" id="pwdMask">
   <div class="password-box">
     <h3>请输入访问密码</h3>
-    <input type="password" id="pwd-input" placeholder="提示：6668">
+    <input type="password" id="pwd-input" placeholder="提示：6668" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
     <div class="tip-error" id="errTip">密码错误，请重新输入</div>
   </div>
@@ -251,7 +254,7 @@ document.getElementById('pwd-input').addEventListener('keydown',function(e){
   if(e.key === 'Enter') checkPassword();
 })
 </script>
- <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+ <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer></script>
 <script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script> 
 </body>
 </html>
