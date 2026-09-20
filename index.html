@@ -31,7 +31,6 @@ body {
   position: relative;
   overflow-x: hidden;
 }
-
 body::before {
   content: "";
   position: fixed;
@@ -44,7 +43,6 @@ body::before {
   z-index: 0;
   animation: gridMove 12s linear infinite;
 }
-
 body::after {
   content: "";
   position: fixed;
@@ -60,7 +58,6 @@ body::after {
   z-index: 0;
   animation: particleMove 20s ease-in-out infinite alternate;
 }
-
 @keyframes gridMove {
   0% {
     background-position: 0 0, 0 0;
@@ -69,7 +66,6 @@ body::after {
     background-position: 40px 40px, 40px 40px;
   }
 }
-
 @keyframes particleMove {
   0% {
     opacity: 0.35;
@@ -147,7 +143,6 @@ body::after {
   font-size:14px;
   display:none;
 }
-
 .top-card{
   background-color: #18140e;
   border:1px solid #3a3324;
@@ -177,6 +172,13 @@ body::after {
   font-size:14px;
   line-height:1.7;
   margin-top:8px;
+}
+.top-card a{
+  color:#e6cd90;
+  text-decoration:none;
+}
+.top-card a:hover{
+  text-decoration:underline;
 }
 .main-card{
   background-color:#18140e;
@@ -236,10 +238,6 @@ body::after {
   color:#887c64;
   font-size:12px;
 }
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<style>
-/* 这里放所有CSS，包括你的media查询代码 */
 @media screen and (max-width: 768px) {
   html {
     -webkit-text-size-adjust: 100%;
@@ -272,18 +270,16 @@ body::after {
     <div class="tip-error" id="errTip">密码错误，请重新输入</div>
   </div>
 </div>
-
 <div class="wrap">
   <div class="top-card">
     <div class="top-tag">OFFICIAL SERVICE</div>
     <h1>欧亚官方服务中心</h1>
     <p>欧信APP官方下载通道</p>
-     <p style="margin-top:12px; font-size:15px;">欧信官方网站：<a href="6.18000.vip" target="_blank">6.18000.vip</a></p>
+     <p style="margin-top:12px; font-size:15px;">欧信官方网站：6.18000.vip</p>
     <!-- ==========这里就是红色框区域，新增两行游戏官网链接========== -->
     <p style="margin-top:8px; font-size:15px;">欧亚游戏官网：<a href="https://www.5599338.com" target="_blank">www.5599338.com</a></p>
     <p style="margin-top:8px; font-size:15px;">欧亚游戏备用：<a href="https://www.5599228.com" target="_blank">www.5599228.com</a></p>
 </div>
-
   <div class="main-card">
     <!-- 欧信APP -->
     <div class="download-row">
@@ -295,7 +291,6 @@ body::after {
       </div>
       <a href="https://ox.kuailiao777.cn/?src=08" target="_blank" class="gold-btn">立即下载</a>
     </div>
-
     <!-- 欧亚游戏APP -->
     <div class="download-row">
       <div class="left-group">
@@ -315,7 +310,6 @@ body::after {
       </div>
       <a href="http://42.51.37.244:15501/login.html" target="_blank" class="gold-btn">立即访问</a>
     </div>
-
  <!-- 欧亚H5快速游戏入口【新增】 -->
     <div class="download-row">
       <div class="left-group">
@@ -338,12 +332,10 @@ body::after {
       <a href="http://47.76.34.41:25506/?0.06538403702842943" target="_blank" class="gold-btn">立即访问</a>
     </div>
   </div>
-
   <div class="bottom-tips">
     请认准官方服务渠道，谨防非官方联系方式。
   </div>
 </div>
-
 <script>
 // 访问密码
 const AccessPassword = "6668";
