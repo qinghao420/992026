@@ -16,19 +16,76 @@
 body {
   min-height: 100vh;
   background-color: #0c0c0c;
-  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-  linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 30px 30px;
-  font-family: "Microsoft YaHei",PingFang SC,sans-serif;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(212, 188, 132, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(212, 188, 132, 0.06), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(212, 188, 132, 0.1), transparent 50%),
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: auto, auto, auto, 30px 30px, 30px 30px;
+  font-family: "Microsoft YaHei", PingFang SC, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding:20px;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
-.wrap{
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(212, 188, 132, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 188, 132, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridMove 12s linear infinite;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(230, 205, 144, 0.35), transparent 60%),
+    radial-gradient(1px 1px at 30% 70%, rgba(230, 205, 144, 0.25), transparent 60%),
+    radial-gradient(1px 1px at 70% 40%, rgba(230, 205, 144, 0.3), transparent 60%),
+    radial-gradient(1px 1px at 85% 80%, rgba(230, 205, 144, 0.2), transparent 60%),
+    radial-gradient(1px 1px at 50% 50%, rgba(230, 205, 144, 0.18), transparent 60%);
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 0;
+  animation: particleMove 20s ease-in-out infinite alternate;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 40px 40px, 40px 40px;
+  }
+}
+
+@keyframes particleMove {
+  0% {
+    opacity: 0.35;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translate3d(-12px, -8px, 0);
+  }
+}
+.wrap {
   width: 100%;
   max-width: 520px;
   display: none;
+  position: relative;
+  z-index: 1;
 }
 /* 密码弹窗样式：增加iOS硬件加速，修复fixed焦点bug */
 .password-mask{
@@ -221,7 +278,7 @@ body {
     <div class="top-tag">OFFICIAL SERVICE</div>
     <h1>欧亚官方服务中心</h1>
     <p>欧信APP官方下载通道</p>
-     <p style="margin-top:12px; font-size:15px;">欧信官方网站：<a href="https://www.ouxin8.com" target="_blank">www.ouxin8.com</a></p>
+     <p style="margin-top:12px; font-size:15px;">欧信官方网站：<a href="6.18000.vip" target="_blank">6.18000.vip</a></p>
     <!-- ==========这里就是红色框区域，新增两行游戏官网链接========== -->
     <p style="margin-top:8px; font-size:15px;">欧亚游戏官网：<a href="https://www.5599338.com" target="_blank">www.5599338.com</a></p>
     <p style="margin-top:8px; font-size:15px;">欧亚游戏备用：<a href="https://www.5599228.com" target="_blank">www.5599228.com</a></p>
