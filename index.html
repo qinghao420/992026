@@ -15,14 +15,14 @@
 }
 body {
   min-height: 100vh;
-  background-color: #0c0c0c;
+  background-color: #070707;
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(212, 188, 132, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(212, 188, 132, 0.06), transparent 45%),
-    radial-gradient(circle at 50% 90%, rgba(212, 188, 132, 0.1), transparent 50%),
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: auto, auto, auto, 30px 30px, 30px 30px;
+    radial-gradient(circle at 20% 10%, rgba(212, 188, 132, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(212, 188, 132, 0.08), transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(212, 188, 132, 0.15), transparent 55%),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: auto, auto, auto, 44px 44px, 44px 44px;
   font-family: "Microsoft YaHei", PingFang SC, sans-serif;
   display: flex;
   align-items: center;
@@ -31,53 +31,48 @@ body {
   position: relative;
   overflow-x: hidden;
 }
-
+/* 第一层：缓慢流动的暗金网格 */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
-    linear-gradient(rgba(212, 188, 132, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 188, 132, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(212, 188, 132, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 188, 132, 0.045) 1px, transparent 1px);
+  background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;
-  animation: gridMove 12s linear infinite;
+  animation: gridMove 18s linear infinite;
 }
-
-body::after {
-  content: "";
+/* 第三层：边缘暗金光带 */
+.edge-glow {
   position: fixed;
   inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(230, 205, 144, 0.35), transparent 60%),
-    radial-gradient(1px 1px at 30% 70%, rgba(230, 205, 144, 0.25), transparent 60%),
-    radial-gradient(1px 1px at 70% 40%, rgba(230, 205, 144, 0.3), transparent 60%),
-    radial-gradient(1px 1px at 85% 80%, rgba(230, 205, 144, 0.2), transparent 60%),
-    radial-gradient(1px 1px at 50% 50%, rgba(230, 205, 144, 0.18), transparent 60%);
-  background-size: 200px 200px;
   pointer-events: none;
   z-index: 0;
-  animation: particleMove 20s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle at 10% 50%, rgba(212, 188, 132, 0.12), transparent 35%),
+    radial-gradient(circle at 90% 50%, rgba(212, 188, 132, 0.1), transparent 35%),
+    radial-gradient(circle at 50% 10%, rgba(212, 188, 132, 0.08), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(212, 188, 132, 0.14), transparent 40%);
+  animation: edgeBreath 10s ease-in-out infinite alternate;
 }
-
 @keyframes gridMove {
   0% {
     background-position: 0 0, 0 0;
   }
   100% {
-    background-position: 40px 40px, 40px 40px;
+    background-position: 60px 60px, 60px 60px;
   }
 }
-
-@keyframes particleMove {
+@keyframes edgeBreath {
   0% {
-    opacity: 0.35;
-    transform: translate3d(0, 0, 0);
+    opacity: 0.5;
+    transform: scale(1);
   }
   100% {
-    opacity: 0.6;
-    transform: translate3d(-12px, -8px, 0);
+    opacity: 0.9;
+    transform: scale(1.04);
   }
 }
 .wrap {
@@ -177,6 +172,13 @@ body::after {
   line-height:1.7;
   margin-top:8px;
 }
+.top-card a{
+  color:#e6cd90;
+  text-decoration:none;
+}
+.top-card a:hover{
+  text-decoration:underline;
+}
 .main-card{
   background-color:#18140e;
   border:1px solid #3a3324;
@@ -235,10 +237,6 @@ body::after {
   color:#887c64;
   font-size:12px;
 }
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<style>
-/* 这里放所有CSS，包括你的media查询代码 */
 @media screen and (max-width: 768px) {
   html {
     -webkit-text-size-adjust: 100%;
@@ -261,6 +259,7 @@ body::after {
 </style>
 </head>
 <body>
+  <div class="edge-glow"></div>
 <!-- 密码弹窗 -->
 <div class="password-mask" id="pwdMask">
   <div class="password-box">
@@ -271,18 +270,16 @@ body::after {
     <div class="tip-error" id="errTip">密码错误，请重新输入</div>
   </div>
 </div>
-
 <div class="wrap">
   <div class="top-card">
     <div class="top-tag">OFFICIAL SERVICE</div>
     <h1>欧亚官方服务中心</h1>
     <p>欧信APP官方下载通道</p>
-     <p style="margin-top:12px; font-size:15px;">欧信官方网站：<a href="6.18000.vip" target="_blank">6.18000.vip</a></p>
+     <p style="margin-top:12px; font-size:15px;">欧信官方网站：6.18000.vip</p>
     <!-- ==========这里就是红色框区域，新增两行游戏官网链接========== -->
     <p style="margin-top:8px; font-size:15px;">欧亚游戏官网：<a href="https://www.5599338.com" target="_blank">www.5599338.com</a></p>
     <p style="margin-top:8px; font-size:15px;">欧亚游戏备用：<a href="https://www.5599228.com" target="_blank">www.5599228.com</a></p>
 </div>
-
   <div class="main-card">
     <!-- 欧信APP -->
     <div class="download-row">
@@ -294,7 +291,7 @@ body::after {
       </div>
       <a href="https://ox.kuailiao777.cn/?src=08" target="_blank" class="gold-btn">立即下载</a>
     </div>
-<!-- 欧亚游戏APP -->
+    <!-- 欧亚游戏APP -->
     <div class="download-row">
       <div class="left-group">
         <div class="icon-box">
@@ -313,7 +310,6 @@ body::after {
       </div>
       <a href="http://42.51.37.244:15501/login.html" target="_blank" class="gold-btn">立即访问</a>
     </div>
-
  <!-- 欧亚H5快速游戏入口【新增】 -->
     <div class="download-row">
       <div class="left-group">
@@ -336,12 +332,10 @@ body::after {
       <a href="http://47.76.34.41:25506/?0.06538403702842943" target="_blank" class="gold-btn">立即访问</a>
     </div>
   </div>
-
   <div class="bottom-tips">
     请认准官方服务渠道，谨防非官方联系方式。
   </div>
 </div>
-
 <script>
 // 访问密码
 const AccessPassword = "6668";
@@ -370,5 +364,138 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
 <!-- 统计脚本增加defer，不阻塞页面交互 -->
  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
 <script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script>
+  <!-- ===== 把下面这一整段粘贴在这里！===== -->
+<canvas id="goldFlowBg" style="position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+<script>
+(function(){
+  const canvas = document.getElementById('goldFlowBg');
+  const ctx = canvas.getContext('2d');
+  let width, height, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let particles = [];
+  let ribbons = [];
+  let time = 0;
+  function resize(){
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function init(){
+    resize();
+    particles = [];
+    ribbons = [];
+    // 细碎金色粒子
+    const particleCount = Math.floor((width * height) / 5500);
+    for(let i = 0; i < particleCount; i++){
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        r: Math.random() * 1.4 + 0.3,
+        a: Math.random() * 0.5 + 0.25,
+        life: Math.random() * 200
+      });
+    }
+    // 流体光带
+    const ribbonCount = Math.max(3, Math.floor(width / 420));
+    for(let i = 0; i < ribbonCount; i++){
+      ribbons.push({
+        startX: Math.random() * width,
+        startY: Math.random() * height,
+        angle: Math.random() * Math.PI * 2,
+        speed: 0.004 + Math.random() * 0.008,
+        length: 120 + Math.random() * 180,
+        width: 4 + Math.random() * 8,
+        hue: 45 + Math.random() * 10,
+        alpha: 0.06 + Math.random() * 0.08
+      });
+    }
+  }
+  function drawParticles(){
+    for(let i = 0; i < particles.length; i++){
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life++;
+      // 微弱流体扰动
+      p.vx += Math.sin(time * 0.001 + p.y * 0.01) * 0.002;
+      p.vy += Math.cos(time * 0.001 + p.x * 0.01) * 0.002;
+      p.vx *= 0.995;
+      p.vy *= 0.995;
+      if(p.x < 0) p.x = width;
+      if(p.x > width) p.x = 0;
+      if(p.y < 0) p.y = height;
+      if(p.y > height) p.y = 0;
+      const twinkle = 0.6 + 0.4 * Math.sin(time * 0.004 + p.life * 0.03);
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255, 225, 170, ${p.a * twinkle})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(230, 205, 144, 0.8)';
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+  }
+  function drawRibbons(){
+    for(let i = 0; i < ribbons.length; i++){
+      const r = ribbons[i];
+      r.angle += r.speed;
+      const x1 = r.startX + Math.cos(r.angle) * r.length;
+      const y1 = r.startY + Math.sin(r.angle) * r.length;
+      const x2 = r.startX - Math.cos(r.angle) * r.length;
+      const y2 = r.startY - Math.sin(r.angle) * r.length;
+      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+      grad.addColorStop(0, `hsla(${r.hue}, 80%, 65%, 0)`);
+      grad.addColorStop(0.5, `hsla(${r.hue}, 80%, 65%, ${r.alpha})`);
+      grad.addColorStop(1, `hsla(${r.hue}, 80%, 65%, 0)`);
+      ctx.beginPath();
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = r.width;
+      ctx.lineCap = 'round';
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = 'rgba(212, 188, 132, 0.6)';
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+  }
+  function drawEdgeGlow(){
+    const grad1 = ctx.createRadialGradient(
+      width * 0.1, height * 0.5, 0,
+      width * 0.1, height * 0.5, Math.max(width, height) * 0.4
+    );
+    grad1.addColorStop(0, 'rgba(212, 188, 132, 0.12)');
+    grad1.addColorStop(1, 'rgba(212, 188, 132, 0)');
+    ctx.fillStyle = grad1;
+    ctx.fillRect(0, 0, width, height);
+    const grad2 = ctx.createRadialGradient(
+      width * 0.9, height * 0.5, 0,
+      width * 0.9, height * 0.5, Math.max(width, height) * 0.4
+    );
+    grad2.addColorStop(0, 'rgba(212, 188, 132, 0.1)');
+    grad2.addColorStop(1, 'rgba(212, 188, 132, 0)');
+    ctx.fillStyle = grad2;
+    ctx.fillRect(0, 0, width, height);
+  }
+  function animate(){
+    time++;
+    ctx.clearRect(0, 0, width, height);
+    drawEdgeGlow();
+    drawRibbons();
+    drawParticles();
+    requestAnimationFrame(animate);
+  }
+  window.addEventListener('resize', init);
+  init();
+  animate();
+})();
+</script>
+<!-- =====粘贴结束===== -->
 </body>
 </html>
+这样子吗？
