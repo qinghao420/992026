@@ -2,566 +2,1012 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- 优化viewport，禁止缩放，解决iOS基础兼容 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <title>欧亚官方服务中心</title>
+
 <style>
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation; /*消除点击300ms延迟*/
-}
-body {
-  min-height: 100vh;
-  background-color: #070707;
-  font-family: "Microsoft YaHei", PingFang SC, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  position: relative;
-  overflow-x: hidden;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-.wrap {
-  width: 100%;
-  max-width: 520px;
-  display: none;
-  position: relative;
-  z-index: 1;
+html,body{
+    width:100%;
+    height:100%;
 }
-/* 密码弹窗样式：增加iOS硬件加速，修复fixed焦点bug */
+
+body{
+    min-height:100vh;
+    background:#030303;
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+/* =========================
+   动态背景
+========================= */
+#goldFlowBg{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+}
+
+/* =========================
+   密码弹窗
+========================= */
 .password-mask{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.94);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    transform:translateZ(0);
 }
+
 .password-box{
-  width:90%;
-  max-width:400px;
-  background-color:#18140e;
-  border:1px solid #3a3324;
-  border-radius:16px;
-  padding:36px 26px;
-  text-align:center;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+    width:380px;
+    max-width:90%;
+    padding:34px 28px;
+    background:linear-gradient(145deg,rgba(30,26,17,.97),rgba(12,11,8,.97));
+    border:1px solid rgba(212,188,132,.35);
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 35px rgba(212,170,70,.08);
 }
+
 .password-box h3{
-  color:#e6cd90;
-  font-size:22px;
-  margin-bottom:24px;
+    color:#e6cd90;
+    font-size:22px;
+    font-weight:normal;
+    margin-bottom:22px;
 }
+
 #pwd-input{
-  width:100%;
-  padding:14px 16px;
-  background:#111;
-  border:1px solid #443c2c;
-  border-radius:10px;
-  color:#fff;
-  font-size:16px;
-  outline:none;
-  margin-bottom:16px;
-  touch-action: manipulation;
+    width:100%;
+    padding:13px 15px;
+    background:#0c0c0c;
+    border:1px solid #443c2c;
+    border-radius:9px;
+    color:#fff;
+    font-size:16px;
+    outline:none;
+    margin-bottom:14px;
 }
+
 #pwd-input:focus{
-  border-color:#d4bc84;
+    border-color:#d4bc84;
 }
+
 .submit-pwd{
-  width:100%;
-  padding:14px;
-  background:linear-gradient(180deg,#c9b278,#998450);
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  color:#000;
-  font-weight:500;
-  cursor:pointer;
+    width:100%;
+    padding:13px;
+    background:linear-gradient(180deg,#d8c078,#a98c4e);
+    border:1px solid rgba(255,225,160,.35);
+    border-radius:9px;
+    font-size:15px;
+    color:#151008;
+    font-weight:600;
+    cursor:pointer;
 }
+
 .tip-error{
-  color:#ff7777;
-  margin-top:12px;
-  font-size:14px;
-  display:none;
+    color:#ff7777;
+    margin-top:12px;
+    font-size:13px;
+    display:none;
 }
+
+/* =========================
+   主体
+========================= */
+.wrap{
+    width:420px;
+    max-width:420px;
+    position:relative;
+    z-index:10;
+    display:none;
+}
+
+/* =========================
+   顶部卡片
+========================= */
 .top-card{
-  background-color: #18140e;
-  border:1px solid #3a3324;
-  border-radius:16px;
-  padding:30px 20px;
-  text-align:center;
-  margin-bottom:20px;
+    background:linear-gradient(145deg,rgba(27,23,15,.94),rgba(10,9,6,.93));
+    border:1px solid rgba(211,172,91,.32);
+    border-radius:13px;
+    padding:24px 18px;
+    text-align:center;
+    margin-bottom:13px;
+    box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 28px rgba(193,142,49,.08);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
 }
+
 .top-tag{
-  font-size:14px;
-  color:#d4bc84;
-  letter-spacing:1px;
-  border:1px solid #d4bc8470;
-  display:inline-block;
-  padding:4px 14px;
-  border-radius:20px;
-  margin-bottom:12px;
+    font-size:11px;
+    color:#d4bc84;
+    letter-spacing:1.5px;
+    border:1px solid rgba(212,188,132,.45);
+    display:inline-block;
+    padding:4px 13px;
+    border-radius:20px;
+    margin-bottom:10px;
 }
+
 .top-card h1{
-  font-size:32px;
-  color:#e6cd90;
-  font-weight:normal;
-  letter-spacing:2px;
+    font-size:27px;
+    color:#e6cd90;
+    font-weight:normal;
+    letter-spacing:2px;
+    text-shadow:0 0 12px rgba(230,205,144,.15);
 }
+
 .top-card p{
-  color:#b8a882;
-  font-size:14px;
-  line-height:1.7;
-  margin-top:8px;
+    color:#b8a882;
+    font-size:12px;
+    line-height:1.6;
+    margin-top:6px;
 }
+
 .top-card a{
-  color:#e6cd90;
-  text-decoration:none;
+    color:#e6cd90;
+    text-decoration:none;
 }
+
 .top-card a:hover{
-  text-decoration:underline;
+    color:#ffe3a0;
+    text-decoration:underline;
 }
+
+/* =========================
+   主菜单
+========================= */
 .main-card{
-  background-color:#18140e;
-  border:1px solid #3a3324;
-  border-radius:16px;
-  padding:36px 26px;
-  text-align:center;
+    background:linear-gradient(145deg,rgba(25,22,15,.95),rgba(9,8,6,.94));
+    border:1px solid rgba(211,172,91,.32);
+    border-radius:13px;
+    padding:24px 20px;
+    text-align:center;
+    box-shadow:0 15px 50px rgba(0,0,0,.65),0 0 35px rgba(193,142,49,.08);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
 }
+
 .download-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:22px;
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    margin-bottom:15px;
+    gap:10px;
 }
-/* 最后一行取消下边距 */
+
 .download-row:last-child{
-  margin-bottom:0;
+    margin-bottom:0;
 }
+
 .left-group{
-  display:flex;
-  align-items:center;
-  gap:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
 }
+
 .icon-box{
-  width:40px;
-  height:40px;
-  border-radius:8px;
-  background:#272218;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#e6cd90;
-  font-size:22px;
-  border:1px solid #443c2c;
+    width:36px;
+    height:36px;
+  flex:0 0 36px;
+    border-radius:7px;
+    background:#17140e;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#e6cd90;
+    border:1px solid #443c2c;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.4);
 }
+
+.icon-box img{
+    width:36px;
+    height:36px;
+    object-fit:cover;
+    border-radius:7px;
+    display:block;
+}
+
 .text-name{
-  color:#e2d3ad;
-  font-size:16px;
+    color:#e2d3ad;
+    font-size:14px;
+    white-space:nowrap;
 }
+
 .gold-btn{
-  padding:10px 26px;
-  background:linear-gradient(180deg,#c9b278,#998450);
-  color:#000;
-  border:none;
-  border-radius:24px;
-  font-size:15px;
-  text-decoration:none;
-  font-weight:500;
-  white-space:nowrap;
+    padding:8px 20px;
+    background:linear-gradient(180deg,#dfc477 0%,#a98a4c 100%);
+    color:#1a1308;
+    border:1px solid rgba(255,225,155,.4);
+    border-radius:22px;
+    font-size:12px;
+    text-decoration:none;
+    font-weight:600;
+    white-space:nowrap;
+    box-shadow:0 4px 12px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.2);
+    transition:.25s ease;
 }
+
 .gold-btn:hover{
-  filter: brightness(1.1);
+    filter:brightness(1.12);
+    transform:translateY(-1px);
+    box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 12px rgba(230,190,90,.15);
 }
+
+.gold-btn:active{
+    transform:translateY(1px);
+}
+
+/* =========================
+   底部提示
+========================= */
 .bottom-tips{
-  text-align:center;
-  margin-top:24px;
-  color:#887c64;
-  font-size:12px;
+    text-align:center;
+    margin-top:14px;
+    color:#887c64;
+    font-size:10px;
 }
-@media screen and (max-width: 768px) {
-  html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-  .gold-btn{
-    padding:6px 14px !important;
-    font-size:12px !important;
-    white-space: nowrap !important;
-  }
-  .text-name{
-    font-size:12px !important;
-    white-space: nowrap !important;
-  }
-  .download-row{
-    margin-bottom:12px !important;
-    flex-wrap: nowrap !important;
-  }
+
+/* =========================
+   电脑大屏优化
+========================= */
+@media screen and (min-width:1400px){
+
+    .wrap{
+        width:440px;
+        max-width:440px;
+    }
+
+    .top-card{
+        padding:27px 20px;
+    }
+
+    .top-card h1{
+        font-size:29px;
+    }
+
+    .main-card{
+        padding:26px 22px;
+    }
+
+    .download-row{
+        margin-bottom:16px;
+    }
+
+    .text-name{
+        font-size:14px;
+    }
+
+    .gold-btn{
+        padding:9px 22px;
+    }
+}
+
+/* =========================
+   小电脑屏幕
+========================= */
+@media screen and (min-width:769px) and (max-width:1100px){
+
+    .wrap{
+        width:390px;
+        max-width:390px;
+    }
+
+    .top-card{
+        padding:21px 17px;
+    }
+
+    .top-card h1{
+        font-size:25px;
+    }
+
+    .main-card{
+        padding:21px 18px;
+    }
+}
+
+/* =========================
+   手机端
+========================= */
+@media screen and (max-width:768px){
+
+    body{
+        min-height:100vh;
+        padding:15px 10px;
+        overflow-y:auto;
+        overflow-x:hidden;
+    }
+
+    .wrap{
+        width:100%;
+        max-width:390px;
+    }
+
+    .top-card{
+        padding:21px 14px;
+        margin-bottom:12px;
+    }
+
+    .top-card h1{
+        font-size:24px;
+        letter-spacing:1px;
+    }
+
+    .top-card p{
+        font-size:11px;
+    }
+
+    .main-card{
+        padding:21px 14px;
+    }
+
+    .download-row{
+        margin-bottom:13px;
+        gap:6px;
+    }
+
+    .icon-box{
+        width:34px;
+        height:34px;
+        flex:0 0 34px;
+    }
+
+    .icon-box img{
+        width:34px;
+        height:34px;
+    }
+
+    .left-group{
+        gap:9px;
+    }
+
+    .text-name{
+        font-size:12px;
+    }
+
+    .gold-btn{
+        padding:7px 14px;
+        font-size:11px;
+    }
+
+    .bottom-tips{
+        margin-top:12px;
+        font-size:9px;
+    }
 }
 </style>
 </head>
-<body>
-<!-- 密码弹窗 -->
-<div class="password-mask" id="pwdMask">
-  <div class="password-box">
-    <h3>请输入访问密码</h3>
-    <!-- 关闭自动填充，解决苹果密码检索卡顿（核心修复） -->
-    <input type="password" id="pwd-input" placeholder="提示：6668" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-    <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
-    <div class="tip-error" id="errTip">密码错误，请重新输入</div>
-  </div>
-</div>
-<div class="wrap">
-  <div class="top-card">
-    <div class="top-tag">OFFICIAL SERVICE</div>
-    <h1>欧亚官方服务中心</h1>
-    <p>欧信APP官方下载通道</p>
-     <p style="margin-top:12px; font-size:15px;">欧信官方网站：6.18000.vip</p>
-    <!-- ==========这里就是红色框区域，新增两行游戏官网链接========== -->
-    <p style="margin-top:8px; font-size:15px;">欧亚游戏官网：<a href="https://www.5599338.com" target="_blank">www.5599338.com</a></p>
-    <p style="margin-top:8px; font-size:15px;">欧亚游戏备用：<a href="https://www.5599228.com" target="_blank">www.5599228.com</a></p>
-</div>
-  <div class="main-card">
-    <!-- 欧信APP -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-  <img src="ouxin2.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
-</div>
-        <span class="text-name">欧信APP下载</span>
-      </div>
-      <a href="https://ox.kuailiao777.cn/?src=08" target="_blank" class="gold-btn">立即下载</a>
-    </div>
-    <!-- 欧亚游戏APP -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-  <img src="ouya.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
-</div>
-        <span class="text-name">游戏APP下载</span>
-      </div>
-      <a href="http://154.221.19.55:53589/download/index.html?v=5" target="_blank" class="gold-btn">立即下载</a>
-    </div>
-      <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-  <img src="ouya.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
-</div>
-        <span class="text-name">代理登录入口</span>
-      </div>
-      <a href="http://42.51.37.244:15501/login.html" target="_blank" class="gold-btn">立即访问</a>
-    </div>
- <!-- 欧亚H5快速游戏入口【新增】 -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-  <img src="ouya.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
-</div>
-        <span class="text-name">手机版游戏入口</span>
-      </div>
-      <a href="http://42.51.38.194:48806/" target="_blank" class="gold-btn">立即访问</a>
-    </div>
-    
-    <!-- 电脑端游戏访问 -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-  <img src="ouya.png" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
-</div>
-        <span class="text-name">电脑版游戏入口</span>
-      </div>
-      <a href="http://47.76.34.41:25506/?0.06538403702842943" target="_blank" class="gold-btn">立即访问</a>
-    </div>
-  </div>
-  <div class="bottom-tips">
-    请认准官方服务渠道，谨防非官方联系方式。
-  </div>
-</div>
-<script>
-// 访问密码
-const AccessPassword = "6668";
-function checkPassword(){
-  const inputVal = document.getElementById('pwd-input').value;
-  const errTip = document.getElementById('errTip');
-  if(inputVal === AccessPassword){
-    document.getElementById('pwdMask').style.display = 'none';
-    document.querySelector('.wrap').style.display = 'block';
-  }else{
-    errTip.style.display = 'block';
-  }
-}
-// 回车快捷登录
-const pwdInput = document.getElementById('pwd-input');
-pwdInput.addEventListener('keydown',function(e){
-  if(e.key === 'Enter') checkPassword();
-})
-// 修复iOS焦点乱窜导致地址栏乱码：弹窗点击空白区域不让焦点乱跑
-document.getElementById('pwdMask').addEventListener('click',function(e){
-  if(e.target === this){
-    pwdInput.blur();
-  }
-})
-</script>
-<!-- 统计脚本增加defer，不阻塞页面交互 -->
- <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-<script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script>
 
-  <!-- ===== 把下面这一整段粘贴在这里！===== -->
-<canvas id="goldFlowBg" style="position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+<body>
+
+<!-- =========================
+     动态黑金背景
+========================= -->
+<canvas id="goldFlowBg"></canvas>
+
+<!-- =========================
+     密码弹窗
+========================= -->
+<div class="password-mask" id="pwdMask">
+    <div class="password-box">
+        <h3>请输入访问密码</h3>
+        <input
+            type="password"
+            id="pwd-input"
+            placeholder="提示：6668"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+        >
+        <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
+        <div class="tip-error" id="errTip">密码错误，请重新输入</div>
+    </div>
+</div>
+
+<!-- =========================
+     网站主体
+========================= -->
+<div class="wrap">
+
+    <div class="top-card">
+        <div class="top-tag">OFFICIAL SERVICE</div>
+
+        <h1>欧亚官方服务中心</h1>
+
+        <p>欧信APP官方下载通道</p>
+
+        <p style="margin-top:10px;font-size:13px;">
+            欧信官方网站：6.18000.vip
+        </p>
+
+        <p style="margin-top:6px;font-size:13px;">
+            欧亚游戏官网：
+          <a href="https://www.5599338.com" target="_blank">
+                www.5599338.com
+            </a>
+        </p>
+
+        <p style="margin-top:6px;font-size:13px;">
+            欧亚游戏备用：
+            <a href="https://www.5599228.com" target="_blank">
+                www.5599228.com
+            </a>
+        </p>
+    </div>
+
+    <div class="main-card">
+
+        <!-- 欧信APP -->
+        <div class="download-row">
+            <div class="left-group">
+                <div class="icon-box">
+                    <img src="ouxin2.png" alt="欧信APP">
+                </div>
+                <span class="text-name">欧信APP下载</span>
+            </div>
+
+            <a
+                href="https://ox.kuailiao777.cn/?src=08"
+                target="_blank"
+                class="gold-btn"
+            >立即下载</a>
+        </div>
+
+        <!-- 欧亚游戏APP -->
+        <div class="download-row">
+            <div class="left-group">
+                <div class="icon-box">
+                    <img src="ouya.png" alt="欧亚游戏">
+                </div>
+                <span class="text-name">游戏APP下载</span>
+            </div>
+
+            <a
+                href="http://154.221.19.55:53589/download/index.html?v=5"
+                target="_blank"
+                class="gold-btn"
+            >立即下载</a>
+        </div>
+
+        <!-- 代理登录 -->
+        <div class="download-row">
+            <div class="left-group">
+                <div class="icon-box">
+                    <img src="ouya.png" alt="代理登录">
+                </div>
+                <span class="text-name">代理登录入口</span>
+            </div>
+
+            <a
+                href="http://42.51.37.244:15501/login.html"
+                target="_blank"
+                class="gold-btn"
+            >立即访问</a>
+        </div>
+
+        <!-- 手机版游戏 -->
+        <div class="download-row">
+            <div class="left-group">
+                <div class="icon-box">
+                    <img src="ouya.png" alt="手机版游戏">
+                </div>
+                <span class="text-name">手机版游戏入口</span>
+            </div>
+
+            <a
+                href="http://42.51.38.194:48806/"
+                target="_blank"
+                class="gold-btn"
+            >立即访问</a>
+        </div>
+
+        <!-- 电脑版游戏 -->
+        <div class="download-row">
+            <div class="left-group">
+                <div class="icon-box">
+                    <img src="ouya.png" alt="电脑版游戏">
+                </div>
+                <span class="text-name">电脑版游戏入口</span>
+            </div>
+
+            <a
+                href="http://47.76.34.41:25506/?0.06538403702842943"
+                target="_blank"
+                class="gold-btn"
+            >立即访问</a>
+        </div>
+
+    </div>
+
+    <div class="bottom-tips">
+        请认准官方服务渠道，谨防非官方联系方式。
+    </div>
+
+</div>
+
+<!-- =========================
+     密码功能
+========================= -->
+<script>
+const AccessPassword = "6668";
+
+function checkPassword(){
+    const inputVal = document.getElementById("pwd-input").value;
+    const errTip = document.getElementById("errTip");
+
+    if(inputVal === AccessPassword){
+        document.getElementById("pwdMask").style.display = "none";
+        document.querySelector(".wrap").style.display = "block";
+    }else{
+        errTip.style.display = "block";
+    }
+}
+
+const pwdInput = document.getElementById("pwd-input");
+
+pwdInput.addEventListener("keydown",function(e){
+    if(e.key === "Enter"){
+        checkPassword();
+    }
+});
+
+document.getElementById("pwdMask").addEventListener("click",function(e){
+    if(e.target === this){
+        pwdInput.blur();
+    }
+});
+</script>
+
+<!-- =========================
+     动态黑金背景 JS
+========================= -->
 <script>
 (function(){
-  const canvas = document.getElementById('goldFlowBg');
-  const ctx = canvas.getContext('2d');
-  let width, height, dpr = Math.min(window.devicePixelRatio || 1, 2);
-  let particles = [];
-  let flowArcs = [];
-  let time = 0;
 
-  function resize(){
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
-    ctx.setTransform(dpr, 0, 0, 0, 0);
-  }
+    const canvas = document.getElementById("goldFlowBg");
+    const ctx = canvas.getContext("2d");
 
-  function init(){
-    resize();
-    particles = [];
-    flowArcs = [];
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let time = 0;
 
-    // 中心密集粒子
-    const centerX = width / 2;
-    const centerY = height / 2;
+    let particles = [];
 
-    for(let i = 0; i < 180; i++){
-      const angle = Math.random() * Math.PI * 2;
-      const radius = Math.random() * Math.min(width, height) * 0.35;
-      particles.push({
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius,
-        vx: Math.cos(angle) * (0.04 + Math.random() * 0.08),
-        vy: Math.sin(angle) * (0.04 + Math.random() * 0.08),
-        r: Math.random() * 1.6 + 0.4,
-        a: Math.random() * 0.6 + 0.35,
-        life: Math.random() * 300,
-        fromCenter: true
-      });
-    }
+    function resize(){
 
-    // 边缘粒子
-    for(let i = 0; i < 120; i++){
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.08,
-        vy: (Math.random() - 0.5) * 0.08,
-        r: Math.random() * 1.2 + 0.3,
-        a: Math.random() * 0.35 + 0.2,
-        life: Math.random() * 300,
-        fromCenter: false
-      });
-    }
+        width = window.innerWidth;
+        height = window.innerHeight;
 
-    // 左侧大光弧
-    flowArcs.push({
-      type: 'left',
-      baseX: -width * 0.25,
-      baseY: height * 0.45,
-      radius: Math.min(width, height) * 0.55,
-      startAngle: 0.35,
-      endAngle: 1.55,
-      lineWidth: 90,
-      alpha: 0.35,
-      speed: 0.0004
-    });
+        dpr = Math.min(window.devicePixelRatio || 1,2);
 
-    // 右侧大光弧
-    flowArcs.push({
-      type: 'right',
-      baseX: width * 1.25,
-      baseY: height * 0.55,
-      radius: Math.min(width, height) * 0.5,
-      startAngle: -2.75,
-      endAngle: -1.45,
-      lineWidth: 110,
-      alpha: 0.4,
-      speed: 0.0005
-    });
+        canvas.width = width * dpr;
+        canvas.
+          height = height * dpr;
 
-    // 中心横向流丝
-    flowArcs.push({
-      type: 'centerBar',
-      y: centerY,
-      width: width * 0.85,
-      lineWidth: 14,
-      alpha: 0.25,
-      speed: 0.0008
-    });
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
 
-    // 中心竖向流丝
-    flowArcs.push({
-      type: 'centerBar',
-      vertical: true,
-      x: centerX,
-      height: height * 0.7,
-      lineWidth: 10,
-      alpha: 0.2,
-      speed: 0.0006
-    });
-  }
-
-  function drawParticles(){
-    for(let i = 0; i < particles.length; i++){
-      const p = particles[i];
-      p.life++;
-
-      if(p.fromCenter){
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.9985;
-        p.vy *= 0.9985;
-      } else {
-        p.x += p.vx + Math.sin(time * 0.001 + p.life * 0.02) * 0.015;
-        p.y += p.vy + Math.cos(time * 0.001 + p.life * 0.02) * 0.015;
-      }
-
-      if(p.x < -50) p.x = width + 50;
-      if(p.x > width + 50) p.x = -50;
-      if(p.y < -50) p.y = height + 50;
-      if(p.y > height + 50) p.y = -50;
-
-      const twinkle = 0.55 + 0.45 * Math.sin(time * 0.005 + p.life * 0.04);
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(255, 225, 170, ${p.a * twinkle})`;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = 'rgba(230, 205, 144, 0.9)';
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.shadowBlur = 0;
-  }
-
-  function drawFlowArcs(){
-    for(let i = 0; i < flowArcs.length; i++){
-      const arc = flowArcs[i];
-
-      if(arc.type === 'left' || arc.type === 'right'){
-        arc.startAngle += arc.speed;
-        arc.endAngle += arc.speed;
-
-        const grad = ctx.createRadialGradient(
-          arc.baseX, arc.baseY, arc.radius - arc.lineWidth,
-          arc.baseX, arc.baseY, arc.radius + arc.lineWidth
+        ctx.setTransform(
+            dpr,
+            0,
+            0,
+            dpr,
+            0,
+            0
         );
-        grad.addColorStop(0, 'rgba(255, 220, 160, 0)');
-        grad.addColorStop(0.45, `rgba(255, 215, 150, ${arc.alpha})`);
-        grad.addColorStop(0.55, `rgba(255, 205, 120, ${arc.alpha * 0.85})`);
-        grad.addColorStop(1, 'rgba(255, 220, 160, 0)');
+    }
+
+    function createParticles(){
+
+        particles = [];
+
+        const mobile = width <= 768;
+        const count = mobile ? 110 : 300;
+
+        for(let i=0;i<count;i++){
+
+            particles.push({
+                x:Math.random() * width,
+                y:Math.random() * height,
+                size:Math.random() * 1.7 + .25,
+                speed:Math.random() * .32 + .03,
+                alpha:Math.random() * .65 + .12,
+                phase:Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function drawParticles(){
+
+        for(let i=0;i<particles.length;i++){
+
+            const p = particles[i];
+
+            p.y -= p.speed;
+
+            p.x += Math.sin(
+                time * .001 +
+                p.phase
+            ) * .10;
+
+            if(p.y < -20){
+                p.y = height + 20;
+                p.x = Math.random() * width;
+            }
+
+            if(p.x < -20){
+                p.x = width + 20;
+            }
+
+            if(p.x > width + 20){
+                p.x = -20;
+            }
+
+            const twinkle =
+                .55 +
+                Math.sin(
+                    time * .004 +
+                    p.phase
+                ) * .45;
+
+            ctx.beginPath();
+
+            ctx.fillStyle =
+                "rgba(255,215,130," +
+                (p.alpha * twinkle) +
+                ")";
+
+            ctx.shadowBlur =
+                p.size > 1 ? 12 : 5;
+
+            ctx.shadowColor =
+                "rgba(255,200,90,.8)";
+
+            ctx.arc(
+                p.x,
+                p.y,
+                p.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+
+        ctx.shadowBlur = 0;
+    }
+
+    function drawLeftRing(){
+
+        const x = width * -.28;
+        const y = height * .55;
+
+        const radius =
+            Math.min(width,height) * .68;
+
+        const move =
+            Math.sin(time * .00035) * .045;
+
+        const start = .20 + move;
+        const end = 1.58 + move;
+
+        const gradient =
+            ctx.createRadialGradient(
+                x,y,radius - 75,
+                x,y,radius + 75
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(255,220,150,0)"
+        );
+
+        gradient.addColorStop(
+            .43,
+            "rgba(255,210,120,.04)"
+        );
+
+        gradient.addColorStop(
+            .50,
+            "rgba(255,215,130,.62)"
+        );
+
+        gradient.addColorStop(
+            .56,
+            "rgba(255,195,90,.22)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(255,220,160,0)"
+        );
 
         ctx.beginPath();
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = arc.lineWidth;
-        ctx.lineCap = 'round';
-        ctx.shadowBlur = 35;
-        ctx.shadowColor = 'rgba(212, 188, 132, 0.9)';
-        ctx.arc(arc.baseX, arc.baseY, arc.radius, arc.startAngle, arc.endAngle);
+
+        ctx.strokeStyle = gradient;
+
+        ctx.lineWidth =
+            width <= 768 ? 42 : 82;
+
+        ctx.lineCap = "round";
+
+        ctx.shadowBlur = 38;
+
+        ctx.shadowColor =
+            "rgba(255,195,80,.55)";
+
+        ctx.arc(
+            x,
+            y,
+            radius,
+            start,
+            end
+        );
+
         ctx.stroke();
-      }
-
-      if(arc.type === 'centerBar'){
-        const pulse = 0.75 + 0.25 * Math.sin(time * arc.speed * 12);
-
-        if(arc.vertical){
-          const grad = ctx.createLinearGradient(
-            arc.x, arc.y - arc.height / 2,
-            arc.x, arc.y + arc.height / 2
-          );
-          grad.addColorStop(0, 'rgba(255, 220, 160, 0)');
-          grad.addColorStop(0.5, `rgba(255, 215, 150, ${arc.alpha * pulse})`);
-          grad.addColorStop(1, 'rgba(255, 220, 160, 0)');
-
-          ctx.beginPath();
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = arc.lineWidth;
-          ctx.lineCap = 'round';
-          ctx.shadowBlur = 25;
-          ctx.shadowColor = 'rgba(212, 188, 132, 0.7)';
-          ctx.moveTo(arc.x, arc.y - arc.height / 2);
-          ctx.lineTo(arc.x, arc.y + arc.height / 2);
-          ctx.stroke();
-        } else {
-          const grad = ctx.createLinearGradient(
-            (width - arc.width) / 2, arc.y,
-            (width + arc.width) / 2, arc.y
-          );
-          grad.addColorStop(0, 'rgba(255, 220, 160, 0)');
-          grad.addColorStop(0.5, `rgba(255, 215, 150, ${arc.alpha * pulse})`);
-          grad.addColorStop(1, 'rgba(255, 220, 160, 0)');
-
-          ctx.beginPath();
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = arc.lineWidth;
-          ctx.lineCap = 'round';
-          ctx.shadowBlur = 25;
-          ctx.shadowColor = 'rgba(212, 188, 132, 0.7)';
-          ctx.moveTo((width - arc.width) / 2, arc.y);
-          ctx.lineTo((width + arc.width) / 2, arc.y);
-          ctx.stroke();
-        }
-      }
     }
-    ctx.shadowBlur = 0;
-  }
 
-  function drawCenterGlow(){
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const glowSize = Math.min(width, height) * 0.28 + 40 * Math.sin(time * 0.004);
+    function drawRightRing(){
 
-    const grad = ctx.createRadialGradient(
-      centerX, centerY, 0,
-      centerX, centerY, glowSize
+        const x = width * 1.28;
+        const y = height * .45;
+
+        const radius =
+            Math.min(width,height) * .63;
+
+        const move =
+            Math.sin(time * .0004) * .045;
+
+        const start = -2.72 + move;
+        const end = -1.34 + move;
+
+        const gradient =
+            ctx.createRadialGradient(
+                x,y,radius - 75,
+                x,y,radius + 75
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(255,220,150,0)"
+        );
+
+        gradient.addColorStop(
+            .43,
+            "rgba(255,210,120,.05)"
+        );
+
+        gradient.addColorStop(
+            .50,
+            "rgba(255,215,130,.70)"
+        );
+
+        gradient.addColorStop(
+            .57,
+            "rgba(255,195,90,.25)"
+        );
+      gradient.addColorStop(
+            1,
+            "rgba(255,220,160,0)"
+        );
+
+        ctx.beginPath();
+
+        ctx.strokeStyle = gradient;
+
+        ctx.lineWidth =
+            width <= 768 ? 45 : 92;
+
+        ctx.lineCap = "round";
+
+        ctx.shadowBlur = 42;
+
+        ctx.shadowColor =
+            "rgba(255,195,80,.65)";
+
+        ctx.arc(
+            x,
+            y,
+            radius,
+            start,
+            end
+        );
+
+        ctx.stroke();
+    }
+
+    function drawFlowLine(){
+
+        const y =
+            height * .53;
+
+        const pulse =
+            .75 +
+            Math.sin(time * .003) * .25;
+
+        const gradient =
+            ctx.createLinearGradient(
+                0,y,width,y
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(255,215,130,0)"
+        );
+
+        gradient.addColorStop(
+            .20,
+            "rgba(255,215,130,.03)"
+        );
+
+        gradient.addColorStop(
+            .50,
+            "rgba(255,215,130," +
+            (.18 * pulse) +
+            ")"
+        );
+
+        gradient.addColorStop(
+            .80,
+            "rgba(255,215,130,.03)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(255,215,130,0)"
+        );
+
+        ctx.beginPath();
+
+        ctx.strokeStyle = gradient;
+
+        ctx.lineWidth =
+            width <= 768 ? 4 : 8;
+
+        ctx.shadowBlur = 20;
+
+        ctx.shadowColor =
+            "rgba(255,195,80,.45)";
+
+        ctx.moveTo(0,y);
+        ctx.lineTo(width,y);
+
+        ctx.stroke();
+    }
+
+    function drawCenterGlow(){
+
+        const x = width / 2;
+        const y = height / 2;
+
+        const size =
+            Math.min(width,height) * .43;
+
+        const gradient =
+            ctx.createRadialGradient(
+                x,y,0,
+                x,y,size
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(255,215,130,.10)"
+        );
+
+        gradient.addColorStop(
+            .35,
+            "rgba(190,135,45,.045)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+        ctx.fillStyle = gradient;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+
+    function animate(){
+
+        time++;
+
+        ctx.clearRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+        /* 最底层黑色 */
+        ctx.fillStyle = "#030303";
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+        drawCenterGlow();
+        drawLeftRing();
+        drawRightRing();
+        drawFlowLine();
+        drawParticles();
+
+        requestAnimationFrame(animate);
+    }
+
+    resize();
+    createParticles();
+    animate();
+
+    window.addEventListener(
+        "resize",
+        function(){
+            resize();
+            createParticles();
+        }
     );
-    grad.addColorStop(0, 'rgba(255, 225, 170, 0.35)');
-    grad.addColorStop(0.4, 'rgba(255, 210, 140, 0.18)');
-    grad.addColorStop(1, 'rgba(255, 220, 160, 0)');
 
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, glowSize, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  function animate(){
-    time++;
-    ctx.clearRect(0, 0, width, height);
-
-    drawCenterGlow();
-    drawFlowArcs();
-    drawParticles();
-
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', init);
-  init();
-  animate();
 })();
 </script>
 
-<!-- =====粘贴结束===== -->
+<!-- =========================
+     51.la 统计
+========================= -->
+<script
+    charset="UTF-8"
+    id="LA_COLLECT"
+    src="//sdk.51.la/js-sdk-pro.min.js"
+    defer>
+</script>
+
+<script>
+window.addEventListener("load",function(){
+    if(typeof LA !== "undefined"){
+        LA.init({
+            id:"3QtEnpgkxnuItnfC",
+            ck:"3QtEnpgkxnuItnfC"
+        });
+    }
+});
+</script>
 
 </body>
 </html>
-
