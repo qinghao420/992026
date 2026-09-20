@@ -17,12 +17,6 @@ body {
   min-height: 100vh;
   background-color: #070707;
   background-image:
-    radial-gradient(circle at 20% 10%, rgba(212, 188, 132, 0.12), transparent 45%),
-    radial-gradient(circle at 80% 20%, rgba(212, 188, 132, 0.08), transparent 50%),
-    radial-gradient(circle at 50% 100%, rgba(212, 188, 132, 0.15), transparent 55%),
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: auto, auto, auto, 44px 44px, 44px 44px;
   font-family: "Microsoft YaHei", PingFang SC, sans-serif;
   display: flex;
   align-items: center;
@@ -32,53 +26,6 @@ body {
   overflow-x: hidden;
 }
 
-/* 第一层：缓慢流动的暗金网格 */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(rgba(212, 188, 132, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 188, 132, 0.045) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-  animation: gridMove 18s linear infinite;
-}
-
-
-/* 第三层：边缘暗金光带 */
-.edge-glow {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(circle at 10% 50%, rgba(212, 188, 132, 0.12), transparent 35%),
-    radial-gradient(circle at 90% 50%, rgba(212, 188, 132, 0.1), transparent 35%),
-    radial-gradient(circle at 50% 10%, rgba(212, 188, 132, 0.08), transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(212, 188, 132, 0.14), transparent 40%);
-  animation: edgeBreath 10s ease-in-out infinite alternate;
-}
-
-@keyframes gridMove {
-  0% {
-    background-position: 0 0, 0 0;
-  }
-  100% {
-    background-position: 60px 60px, 60px 60px;
-  }
-}
-@keyframes edgeBreath {
-  0% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.9;
-    transform: scale(1.04);
-  }
-}
 .wrap {
   width: 100%;
   max-width: 520px;
@@ -263,7 +210,6 @@ body::before {
 </style>
 </head>
 <body>
-  <div class="edge-glow"></div>
 <!-- 密码弹窗 -->
 <div class="password-mask" id="pwdMask">
   <div class="password-box">
