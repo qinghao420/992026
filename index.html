@@ -370,8 +370,7 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
 <script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script>
 
   <!-- ===== 把下面这一整段粘贴在这里！===== -->
-<canvas id="goldFlowBg" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
-
+<canvas id="goldFlowBg" style="position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
 <script>
 (function(){
   const canvas = document.getElementById('goldFlowBg');
@@ -380,7 +379,6 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
   let particles = [];
   let ribbons = [];
   let time = 0;
-
   function resize(){
     width = window.innerWidth;
     height = window.innerHeight;
@@ -388,14 +386,12 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
     canvas.height = height * dpr;
     canvas.style.width = width + 'px';
     canvas.style.height = height + 'px';
-    ctx.setTransform(dpr, 0, 0, 0, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-
   function init(){
     resize();
     particles = [];
     ribbons = [];
-
     // 细碎金色粒子
     const particleCount = Math.floor((width * height) / 5500);
     for(let i = 0; i < particleCount; i++){
@@ -409,7 +405,6 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
         life: Math.random() * 200
       });
     }
-
     // 流体光带
     const ribbonCount = Math.max(3, Math.floor(width / 420));
     for(let i = 0; i < ribbonCount; i++){
@@ -425,25 +420,21 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
       });
     }
   }
-
   function drawParticles(){
     for(let i = 0; i < particles.length; i++){
       const p = particles[i];
       p.x += p.vx;
       p.y += p.vy;
       p.life++;
-
       // 微弱流体扰动
       p.vx += Math.sin(time * 0.001 + p.y * 0.01) * 0.002;
       p.vy += Math.cos(time * 0.001 + p.x * 0.01) * 0.002;
       p.vx *= 0.995;
       p.vy *= 0.995;
-
       if(p.x < 0) p.x = width;
       if(p.x > width) p.x = 0;
       if(p.y < 0) p.y = height;
       if(p.y > height) p.y = 0;
-
       const twinkle = 0.6 + 0.4 * Math.sin(time * 0.004 + p.life * 0.03);
       ctx.beginPath();
       ctx.fillStyle = `rgba(255, 225, 170, ${p.a * twinkle})`;
@@ -454,22 +445,18 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
     }
     ctx.shadowBlur = 0;
   }
-
   function drawRibbons(){
     for(let i = 0; i < ribbons.length; i++){
       const r = ribbons[i];
       r.angle += r.speed;
-
       const x1 = r.startX + Math.cos(r.angle) * r.length;
       const y1 = r.startY + Math.sin(r.angle) * r.length;
       const x2 = r.startX - Math.cos(r.angle) * r.length;
       const y2 = r.startY - Math.sin(r.angle) * r.length;
-
       const grad = ctx.createLinearGradient(x1, y1, x2, y2);
       grad.addColorStop(0, `hsla(${r.hue}, 80%, 65%, 0)`);
       grad.addColorStop(0.5, `hsla(${r.hue}, 80%, 65%, ${r.alpha})`);
       grad.addColorStop(1, `hsla(${r.hue}, 80%, 65%, 0)`);
-
       ctx.beginPath();
       ctx.strokeStyle = grad;
       ctx.lineWidth = r.width;
@@ -482,7 +469,6 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
     }
     ctx.shadowBlur = 0;
   }
-
   function drawEdgeGlow(){
     const grad1 = ctx.createRadialGradient(
       width * 0.1, height * 0.5, 0,
@@ -492,7 +478,6 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
     grad1.addColorStop(1, 'rgba(212, 188, 132, 0)');
     ctx.fillStyle = grad1;
     ctx.fillRect(0, 0, width, height);
-
     const grad2 = ctx.createRadialGradient(
       width * 0.9, height * 0.5, 0,
       width * 0.9, height * 0.5, Math.max(width, height) * 0.4
@@ -502,18 +487,14 @@ document.getElementById('pwdMask').addEventListener('click',function(e){
     ctx.fillStyle = grad2;
     ctx.fillRect(0, 0, width, height);
   }
-
   function animate(){
     time++;
     ctx.clearRect(0, 0, width, height);
-
     drawEdgeGlow();
     drawRibbons();
     drawParticles();
-
     requestAnimationFrame(animate);
   }
-
   window.addEventListener('resize', init);
   init();
   animate();
