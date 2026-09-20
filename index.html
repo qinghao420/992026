@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no,
+               viewport-fit=cover">
+
 <title>欧亚官方服务中心</title>
 
 <style>
+
+/* =====================================================
+   基础设置
+===================================================== */
+
 *{
     margin:0;
     padding:0;
@@ -13,406 +26,714 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     width:100%;
-    height:100%;
+    min-height:100%;
 }
 
 body{
+
     min-height:100vh;
-    background:#030303;
-    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+
+    background:#020202;
+
+    font-family:
+        "Microsoft YaHei",
+        "PingFang SC",
+        sans-serif;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
+    padding:20px;
+
     position:relative;
-    overflow:hidden;
+
+    overflow-x:hidden;
+
+    color:#fff;
 }
 
-/* =========================
-   动态背景
-========================= */
-#goldFlowBg{
+
+/* =====================================================
+   动态背景 Canvas
+===================================================== */
+
+#goldCinemaBg{
+
     position:fixed;
+
     left:0;
     top:0;
-    width:100%;
-    height:100%;
+
+    width:100vw;
+    height:100vh;
+
     z-index:0;
+
+    display:block;
+
     pointer-events:none;
 }
 
-/* =========================
+
+/* =====================================================
    密码弹窗
-========================= */
+===================================================== */
+
 .password-mask{
+
     position:fixed;
+
     inset:0;
-    background:rgba(0,0,0,.94);
+
+    background:#020202;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     z-index:9999;
+
+    padding:20px;
+
+    overflow:hidden;
+}
+
+
+/* 密码弹窗也带一点金色氛围 */
+
+.password-mask::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(214,170,75,.13),
+            rgba(0,0,0,0) 70%
+        );
+
+    pointer-events:none;
+}
+
+
+.password-box{
+
+    width:90%;
+
+    max-width:400px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30,25,16,.96),
+            rgba(12,10,7,.97)
+        );
+
+    border:1px solid rgba(190,155,82,.35);
+
+    border-radius:16px;
+
+    padding:36px 26px;
+
+    text-align:center;
+
+    position:relative;
+
+    z-index:2;
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.75),
+        0 0 35px rgba(190,150,65,.08);
+
+    -webkit-transform:translateZ(0);
     transform:translateZ(0);
 }
 
-.password-box{
-    width:380px;
-    max-width:90%;
-    padding:34px 28px;
-    background:linear-gradient(145deg,rgba(30,26,17,.97),rgba(12,11,8,.97));
-    border:1px solid rgba(212,188,132,.35);
-    border-radius:14px;
-    text-align:center;
-    box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 35px rgba(212,170,70,.08);
-}
 
 .password-box h3{
+
     color:#e6cd90;
+
     font-size:22px;
+
     font-weight:normal;
-    margin-bottom:22px;
+
+    margin-bottom:24px;
+
+    letter-spacing:1px;
 }
+
 
 #pwd-input{
+
     width:100%;
-    padding:13px 15px;
-    background:#0c0c0c;
+
+    padding:14px 16px;
+
+    background:#0b0a08;
+
     border:1px solid #443c2c;
-    border-radius:9px;
+
+    border-radius:10px;
+
     color:#fff;
+
     font-size:16px;
+
     outline:none;
-    margin-bottom:14px;
+
+    margin-bottom:16px;
+
+    text-align:center;
 }
+
 
 #pwd-input:focus{
+
     border-color:#d4bc84;
+
+    box-shadow:
+        0 0 15px rgba(212,188,132,.12);
 }
+
 
 .submit-pwd{
+
     width:100%;
-    padding:13px;
-    background:linear-gradient(180deg,#d8c078,#a98c4e);
-    border:1px solid rgba(255,225,160,.35);
-    border-radius:9px;
-    font-size:15px;
-    color:#151008;
+
+    padding:14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #d9c184,
+            #9d8450
+        );
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    color:#080704;
+
     font-weight:600;
+
     cursor:pointer;
+
+    transition:.25s;
 }
+
+
+.submit-pwd:hover{
+
+    filter:brightness(1.12);
+
+    box-shadow:
+        0 0 20px rgba(220,190,110,.2);
+}
+
 
 .tip-error{
+
     color:#ff7777;
+
     margin-top:12px;
-    font-size:13px;
+
+    font-size:14px;
+
     display:none;
 }
 
-/* =========================
-   主体
-========================= */
+
+/* =====================================================
+   页面主体
+===================================================== */
+
 .wrap{
-    width:420px;
-    max-width:420px;
-    position:relative;
-    z-index:10;
+
+    width:100%;
+
+    max-width:520px;
+
     display:none;
+
+    position:relative;
+
+    z-index:10;
+
+    margin:auto;
+
 }
 
-/* =========================
+
+/* =====================================================
    顶部卡片
-========================= */
+===================================================== */
+
 .top-card{
-    background:linear-gradient(145deg,rgba(27,23,15,.94),rgba(10,9,6,.93));
-    border:1px solid rgba(211,172,91,.32);
-    border-radius:13px;
-    padding:24px 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28,24,16,.92),
+            rgba(13,11,8,.92)
+        );
+
+    border:1px solid rgba(190,155,82,.35);
+
+    border-radius:16px;
+
+    padding:30px 20px;
+
     text-align:center;
-    margin-bottom:13px;
-    box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 28px rgba(193,142,49,.08);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
+
+    margin-bottom:20px;
+
+    box-shadow:
+
+        0 20px 70px rgba(0,0,0,.45),
+
+        0 0 30px rgba(205,165,80,.07);
+
+    backdrop-filter:blur(5px);
+
+    -webkit-backdrop-filter:blur(5px);
 }
+
 
 .top-tag{
-    font-size:11px;
+
+    font-size:14px;
+
     color:#d4bc84;
-    letter-spacing:1.5px;
+
+    letter-spacing:1px;
+
     border:1px solid rgba(212,188,132,.45);
+
     display:inline-block;
-    padding:4px 13px;
+
+    padding:4px 14px;
+
     border-radius:20px;
-    margin-bottom:10px;
+
+    margin-bottom:12px;
+
+    background:rgba(212,188,132,.03);
 }
+
 
 .top-card h1{
-    font-size:27px;
+
+    font-size:32px;
+
     color:#e6cd90;
+
     font-weight:normal;
+
     letter-spacing:2px;
-    text-shadow:0 0 12px rgba(230,205,144,.15);
+
+    text-shadow:
+        0 0 18px rgba(220,190,110,.18);
 }
+
 
 .top-card p{
+
     color:#b8a882;
-    font-size:12px;
-    line-height:1.6;
-    margin-top:6px;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    margin-top:8px;
 }
+
 
 .top-card a{
+
     color:#e6cd90;
+
     text-decoration:none;
+
+    transition:.2s;
 }
 
+
 .top-card a:hover{
-    color:#ffe3a0;
+
+    color:#ffe7a9;
+
     text-decoration:underline;
 }
 
-/* =========================
-   主菜单
-========================= */
+
+/* =====================================================
+   主内容卡片
+===================================================== */
+
 .main-card{
-    background:linear-gradient(145deg,rgba(25,22,15,.95),rgba(9,8,6,.94));
-    border:1px solid rgba(211,172,91,.32);
-    border-radius:13px;
-    padding:24px 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28,24,16,.93),
+            rgba(13,11,8,.93)
+        );
+
+    border:1px solid rgba(190,155,82,.35);
+
+    border-radius:16px;
+
+    padding:36px 26px;
+
     text-align:center;
-    box-shadow:0 15px 50px rgba(0,0,0,.65),0 0 35px rgba(193,142,49,.08);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
+
+    box-shadow:
+
+        0 20px 70px rgba(0,0,0,.5),
+
+        0 0 35px rgba(205,165,80,.07);
+
+    backdrop-filter:blur(5px);
+
+    -webkit-backdrop-filter:blur(5px);
 }
+
+
+/* =====================================================
+   下载行
+===================================================== */
 
 .download-row{
+
     position:relative;
-    z-index:2;
+
+    z-index:20;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-    width:100%;
-    margin-bottom:15px;
-    gap:10px;
+
+    margin-bottom:22px;
+
+    gap:12px;
 }
 
+
 .download-row:last-child{
+
     margin-bottom:0;
 }
 
+
 .left-group{
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
+
     min-width:0;
 }
 
+
 .icon-box{
-    width:36px;
-    height:36px;
-  flex:0 0 36px;
-    border-radius:7px;
-    background:#17140e;
+
+    width:40px;
+
+    height:40px;
+
+    flex-shrink:0;
+
+    border-radius:8px;
+
+    background:#272218;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     color:#e6cd90;
+
+    font-size:22px;
+
     border:1px solid #443c2c;
+
     overflow:hidden;
-    box-shadow:0 2px 8px rgba(0,0,0,.4);
+
+    box-shadow:
+        0 0 12px rgba(220,180,80,.05);
 }
 
+
 .icon-box img{
-    width:36px;
-    height:36px;
+
+    width:40px;
+
+    height:40px;
+
     object-fit:cover;
-    border-radius:7px;
+
+    border-radius:8px;
+
     display:block;
 }
 
+
 .text-name{
+
     color:#e2d3ad;
-    font-size:14px;
+
+    font-size:16px;
+
     white-space:nowrap;
 }
+
 
 .gold-btn{
-    padding:8px 20px;
-    background:linear-gradient(180deg,#dfc477 0%,#a98a4c 100%);
-    color:#1a1308;
-    border:1px solid rgba(255,225,155,.4);
-    border-radius:22px;
-    font-size:12px;
+
+    padding:10px 26px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #d8c17e,
+            #9a824e
+        );
+
+    color:#000;
+
+    border:none;
+
+    border-radius:24px;
+
+    font-size:15px;
+
     text-decoration:none;
+
     font-weight:600;
+
     white-space:nowrap;
-    box-shadow:0 4px 12px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.2);
-    transition:.25s ease;
+
+    cursor:pointer;
+
+    transition:
+
+        transform .2s,
+
+        filter .2s,
+
+        box-shadow .2s;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.22);
 }
+
 
 .gold-btn:hover{
+
     filter:brightness(1.12);
+
     transform:translateY(-1px);
-    box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 12px rgba(230,190,90,.15);
+
+    box-shadow:
+        0 7px 22px rgba(210,175,85,.18);
 }
+
 
 .gold-btn:active{
-    transform:translateY(1px);
+
+    transform:translateY(0);
 }
 
-/* =========================
+
+/* =====================================================
    底部提示
-========================= */
+===================================================== */
+
 .bottom-tips{
+
     text-align:center;
-    margin-top:14px;
+
+    margin-top:24px;
+
     color:#887c64;
-    font-size:10px;
+
+    font-size:12px;
+
+    position:relative;
+
+    z-index:10;
 }
 
-/* =========================
-   电脑大屏优化
-========================= */
-@media screen and (min-width:1400px){
 
-    .wrap{
-        width:440px;
-        max-width:440px;
-    }
-
-    .top-card{
-        padding:27px 20px;
-    }
-
-    .top-card h1{
-        font-size:29px;
-    }
-
-    .main-card{
-        padding:26px 22px;
-    }
-
-    .download-row{
-        margin-bottom:16px;
-    }
-
-    .text-name{
-        font-size:14px;
-    }
-
-    .gold-btn{
-        padding:9px 22px;
-    }
-}
-
-/* =========================
-   小电脑屏幕
-========================= */
-@media screen and (min-width:769px) and (max-width:1100px){
-
-    .wrap{
-        width:390px;
-        max-width:390px;
-    }
-
-    .top-card{
-        padding:21px 17px;
-    }
-
-    .top-card h1{
-        font-size:25px;
-    }
-
-    .main-card{
-        padding:21px 18px;
-    }
-}
-
-/* =========================
+/* =====================================================
    手机端
-========================= */
+===================================================== */
+
 @media screen and (max-width:768px){
 
     body{
-        min-height:100vh;
-        padding:15px 10px;
-        overflow-y:auto;
-        overflow-x:hidden;
+
+        padding:14px;
     }
+
 
     .wrap{
-        width:100%;
-        max-width:390px;
+
+        max-width:520px;
     }
+
 
     .top-card{
-        padding:21px 14px;
-        margin-bottom:12px;
+
+        padding:24px 16px;
+
+        margin-bottom:14px;
     }
+
 
     .top-card h1{
-        font-size:24px;
-        letter-spacing:1px;
+
+        font-size:25px;
     }
+
 
     .top-card p{
-        font-size:11px;
-    }
 
-    .main-card{
-        padding:21px 14px;
-    }
-
-    .download-row{
-        margin-bottom:13px;
-        gap:6px;
-    }
-
-    .icon-box{
-        width:34px;
-        height:34px;
-        flex:0 0 34px;
-    }
-
-    .icon-box img{
-        width:34px;
-        height:34px;
-    }
-
-    .left-group{
-        gap:9px;
-    }
-
-    .text-name{
         font-size:12px;
     }
 
+
+    .main-card{
+
+        padding:26px 16px;
+    }
+
+
     .gold-btn{
-        padding:7px 14px;
+
+        padding:7px 15px;
+
+        font-size:12px;
+    }
+
+
+    .text-name{
+
+        font-size:12px;
+    }
+
+
+    .download-row{
+
+        margin-bottom:14px;
+
+        gap:8px;
+    }
+
+
+    .left-group{
+
+        gap:8px;
+    }
+
+
+    .icon-box{
+
+        width:36px;
+        height:36px;
+    }
+
+
+    .icon-box img{
+
+        width:36px;
+        height:36px;
+    }
+}
+
+
+/* =====================================================
+   很小的手机
+===================================================== */
+
+@media screen and (max-width:380px){
+
+    .top-card h1{
+
+        font-size:22px;
+    }
+
+
+    .main-card{
+
+        padding:22px 12px;
+    }
+
+
+    .gold-btn{
+
+        padding:6px 11px;
+
         font-size:11px;
     }
 
-    .bottom-tips{
-        margin-top:12px;
-        font-size:9px;
+
+    .text-name{
+
+        font-size:11px;
     }
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<!-- =========================
-     动态黑金背景
-========================= -->
-<canvas id="goldFlowBg"></canvas>
 
-<!-- =========================
+<!-- =====================================================
+     动态黑金背景
+===================================================== -->
+
+<canvas id="goldCinemaBg"></canvas>
+
+
+<!-- =====================================================
      密码弹窗
-========================= -->
+===================================================== -->
+
 <div class="password-mask" id="pwdMask">
+
     <div class="password-box">
+
         <h3>请输入访问密码</h3>
+
         <input
             type="password"
             id="pwd-input"
@@ -422,270 +743,1131 @@ body{
             autocapitalize="off"
             spellcheck="false"
         >
-        <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
-        <div class="tip-error" id="errTip">密码错误，请重新输入</div>
+
+        <button
+            class="submit-pwd"
+            onclick="checkPassword()"
+        >
+            确认进入
+        </button>
+
+        <div
+            class="tip-error"
+            id="errTip"
+        >
+            密码错误，请重新输入
+        </div>
+
     </div>
+
 </div>
 
-<!-- =========================
+
+<!-- =====================================================
      网站主体
-========================= -->
+===================================================== -->
+
 <div class="wrap">
 
+
+    <!-- =================================================
+         顶部信息
+    ================================================= -->
+
     <div class="top-card">
-        <div class="top-tag">OFFICIAL SERVICE</div>
 
-        <h1>欧亚官方服务中心</h1>
+        <div class="top-tag">
+            OFFICIAL SERVICE
+        </div>
 
-        <p>欧信APP官方下载通道</p>
+        <h1>
+            欧亚官方服务中心
+        </h1>
 
-        <p style="margin-top:10px;font-size:13px;">
-            欧信官方网站：6.18000.vip
+        <p>
+            欧信APP官方下载通道
         </p>
 
-        <p style="margin-top:6px;font-size:13px;">
+        <p
+            style="
+            margin-top:12px;
+            font-size:15px;
+            "
+        >
+            欧信官方网站：
+            <a
+                href="https://6.18000.vip"
+                target="_blank"
+            >
+                6.18000.vip
+            </a>
+        </p>
+
+        <p
+            style="
+            margin-top:8px;
+            font-size:15px;
+            "
+        >
             欧亚游戏官网：
-          <a href="https://www.5599338.com" target="_blank">
+            <a
+                href="https://www.5599338.com"
+                target="_blank"
+            >
                 www.5599338.com
             </a>
         </p>
 
-        <p style="margin-top:6px;font-size:13px;">
+        <p
+            style="
+            margin-top:8px;
+            font-size:15px;
+            "
+        >
             欧亚游戏备用：
-            <a href="https://www.5599228.com" target="_blank">
+            <a
+                href="https://www.5599228.com"
+                target="_blank"
+            >
                 www.5599228.com
             </a>
         </p>
+
     </div>
+
+
+    <!-- =================================================
+         下载/入口
+    ================================================= -->
 
     <div class="main-card">
 
+
         <!-- 欧信APP -->
+
         <div class="download-row">
+
             <div class="left-group">
+
                 <div class="icon-box">
-                    <img src="ouxin2.png" alt="欧信APP">
+
+                    <img
+                        src="ouxin2.png"
+                        alt="欧信APP"
+                    >
+
                 </div>
-                <span class="text-name">欧信APP下载</span>
+
+                <span class="text-name">
+                    欧信APP下载
+                </span>
+
             </div>
 
             <a
                 href="https://ox.kuailiao777.cn/?src=08"
                 target="_blank"
                 class="gold-btn"
-            >立即下载</a>
+            >
+                立即下载
+            </a>
+
         </div>
 
+
         <!-- 欧亚游戏APP -->
+
         <div class="download-row">
+
             <div class="left-group">
+
                 <div class="icon-box">
-                    <img src="ouya.png" alt="欧亚游戏">
+
+                    <img
+                        src="ouya.png"
+                        alt="游戏APP"
+                    >
+
                 </div>
-                <span class="text-name">游戏APP下载</span>
+
+                <span class="text-name">
+                    游戏APP下载
+                </span>
+
             </div>
 
             <a
                 href="http://154.221.19.55:53589/download/index.html?v=5"
                 target="_blank"
                 class="gold-btn"
-            >立即下载</a>
+            >
+                立即下载
+            </a>
+
         </div>
 
+
         <!-- 代理登录 -->
+
         <div class="download-row">
+
             <div class="left-group">
+
                 <div class="icon-box">
-                    <img src="ouya.png" alt="代理登录">
+
+                    <img
+                        src="ouya.png"
+                        alt="代理登录"
+                    >
+
                 </div>
-                <span class="text-name">代理登录入口</span>
+
+                <span class="text-name">
+                    代理登录入口
+                </span>
+
             </div>
 
             <a
                 href="http://42.51.37.244:15501/login.html"
                 target="_blank"
                 class="gold-btn"
-            >立即访问</a>
+            >
+                立即访问
+            </a>
+
         </div>
 
-        <!-- 手机版游戏 -->
+
+        <!-- 手机游戏 -->
+
         <div class="download-row">
+
             <div class="left-group">
+
                 <div class="icon-box">
-                    <img src="ouya.png" alt="手机版游戏">
+
+                    <img
+                        src="ouya.png"
+                        alt="手机版游戏"
+                    >
+
                 </div>
-                <span class="text-name">手机版游戏入口</span>
+
+                <span class="text-name">
+                    手机版游戏入口
+                </span>
+
             </div>
 
             <a
                 href="http://42.51.38.194:48806/"
                 target="_blank"
                 class="gold-btn"
-            >立即访问</a>
+            >
+                立即访问
+            </a>
+
         </div>
 
+
         <!-- 电脑版游戏 -->
+
         <div class="download-row">
+
             <div class="left-group">
+
                 <div class="icon-box">
-                    <img src="ouya.png" alt="电脑版游戏">
+
+                    <img
+                        src="ouya.png"
+                        alt="电脑版游戏"
+                    >
+
                 </div>
-                <span class="text-name">电脑版游戏入口</span>
+
+                <span class="text-name">
+                    电脑版游戏入口
+                </span>
+
             </div>
 
             <a
                 href="http://47.76.34.41:25506/?0.06538403702842943"
                 target="_blank"
                 class="gold-btn"
-            >立即访问</a>
+            >
+                立即访问
+            </a>
+
         </div>
 
+
     </div>
 
+
+    <!-- =================================================
+         底部提示
+    ================================================= -->
+
     <div class="bottom-tips">
+
         请认准官方服务渠道，谨防非官方联系方式。
+
     </div>
+
 
 </div>
 
-<!-- =========================
+
+<!-- =====================================================
      密码功能
-========================= -->
+===================================================== -->
+
 <script>
+
 const AccessPassword = "6668";
 
+
 function checkPassword(){
-    const inputVal = document.getElementById("pwd-input").value;
-    const errTip = document.getElementById("errTip");
+
+    const inputVal =
+        document.getElementById("pwd-input").value;
+
+    const errTip =
+        document.getElementById("errTip");
 
     if(inputVal === AccessPassword){
-        document.getElementById("pwdMask").style.display = "none";
-        document.querySelector(".wrap").style.display = "block";
+
+        document.getElementById(
+            "pwdMask"
+        ).style.display = "none";
+
+        document.querySelector(
+            ".wrap"
+        ).style.display = "block";
+
     }else{
+
         errTip.style.display = "block";
+
     }
+
 }
 
-const pwdInput = document.getElementById("pwd-input");
 
-pwdInput.addEventListener("keydown",function(e){
-    if(e.key === "Enter"){
-        checkPassword();
-    }
-});
+/* 回车登录 */
 
-document.getElementById("pwdMask").addEventListener("click",function(e){
-    if(e.target === this){
-        pwdInput.blur();
+const pwdInput =
+    document.getElementById("pwd-input");
+
+
+pwdInput.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+
+            checkPassword();
+
+        }
+
     }
-});
+);
+
+
+/* 点击弹窗空白区域 */
+
+document
+    .getElementById("pwdMask")
+    .addEventListener(
+        "click",
+        function(e){
+
+            if(e.target === this){
+
+                pwdInput.blur();
+
+            }
+
+        }
+    );
+
 </script>
 
-<!-- =========================
-     动态黑金背景 JS
-========================= -->
+
+<!-- =====================================================
+     51.LA统计
+===================================================== -->
+
+<script
+    charset="UTF-8"
+    id="LA_COLLECT"
+    src="//sdk.51.la/js-sdk-pro.min.js"
+    defer
+></script>
+
 <script>
+
+window.addEventListener(
+    "load",
+    function(){
+
+        if(typeof LA !== "undefined"){
+
+            LA.init({
+                id:"3QtEnpgkxnuItnfC",
+                ck:"3QtEnpgkxnuItnfC"
+            });
+
+        }
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+     黑金电影感动态背景程序
+===================================================== -->
+
+<script>
+
 (function(){
 
-    const canvas = document.getElementById("goldFlowBg");
-    const ctx = canvas.getContext("2d");
+    const canvas =
+        document.getElementById(
+            "goldCinemaBg"
+        );
 
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
+    const ctx =
+        canvas.getContext("2d");
+
+
+    let W = 0;
+    let H = 0;
+
+    let DPR = 1;
+
     let time = 0;
 
     let particles = [];
 
+    let stars = [];
+
+
+    /* =================================================
+       调整画布
+    ================================================= */
+
     function resize(){
 
-        width = window.innerWidth;
-        height = window.innerHeight;
+        W = window.innerWidth;
 
-        dpr = Math.min(window.devicePixelRatio || 1,2);
+        H = window.innerHeight;
 
-        canvas.width = width * dpr;
-        canvas.
-          height = height * dpr;
+        DPR =
+            Math.min(
+                window.devicePixelRatio || 1,
+                2
+            );
 
-        canvas.style.width = width + "px";
-        canvas.style.height = height + "px";
+        canvas.width =
+            W * DPR;
+
+        canvas.height =
+            H * DPR;
+
+        canvas.style.width =
+            W + "px";
+
+        canvas.style.height =
+            H + "px";
 
         ctx.setTransform(
-            dpr,
+            DPR,
             0,
             0,
-            dpr,
+            DPR,
             0,
             0
         );
+
     }
+
+
+    /* =================================================
+       创建粒子
+    ================================================= */
 
     function createParticles(){
 
         particles = [];
 
-        const mobile = width <= 768;
-        const count = mobile ? 110 : 300;
+        stars = [];
 
-        for(let i=0;i<count;i++){
+
+        const mobile =
+            W < 768;
+
+
+        const particleCount =
+            mobile ? 100 : 360;
+
+
+        const starCount =
+            mobile ? 35 : 90;
+
+
+        /* 小金色粒子 */
+
+        for(
+            let i = 0;
+            i < particleCount;
+            i++
+        ){
 
             particles.push({
-                x:Math.random() * width,
-                y:Math.random() * height,
-                size:Math.random() * 1.7 + .25,
-                speed:Math.random() * .32 + .03,
-                alpha:Math.random() * .65 + .12,
-                phase:Math.random() * Math.PI * 2
+
+                x:
+                    Math.random() * W,
+
+                y:
+                    Math.random() * H,
+
+                size:
+                    Math.random() * 1.5 + .25,
+
+                speed:
+                    Math.random() * .18 + .025,
+
+                drift:
+                    Math.random() * .5 + .05,
+
+                alpha:
+                    Math.random() * .55 + .15,
+
+                phase:
+                    Math.random() *
+                    Math.PI * 2,
+
+                twinkle:
+                    Math.random() *
+                    .035 + .01
+
             });
+
         }
+
+
+        /* 大型星光 */
+
+        for(
+            let i = 0;
+            i < starCount;
+            i++
+        ){
+
+            stars.push({
+
+                x:
+                    Math.random() * W,
+
+                y:
+                    Math.random() * H,
+
+                size:
+                    Math.random() * 2.7 + .7,
+
+                alpha:
+                    Math.random() * .6 + .2,
+
+                phase:
+                    Math.random() *
+                    Math.PI * 2,
+
+                speed:
+                    Math.random() *
+                    .02 + .005
+
+            });
+
+        }
+
     }
+
+
+    /* =================================================
+       黑色背景
+    ================================================= */
+
+    function drawBackground(){
+
+        const gradient =
+            ctx.createRadialGradient(
+
+                W * .5,
+                H * .48,
+                0,
+
+                W * .5,
+                H * .48,
+                Math.max(W,H) * .85
+
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "#171108"
+        );
+
+
+        gradient.addColorStop(
+            .25,
+            "#0b0804"
+        );
+
+
+        gradient.addColorStop(
+            .62,
+            "#030302"
+        );
+
+
+        gradient.addColorStop(
+            1,
+            "#000000"
+        );
+
+
+        ctx.fillStyle =
+            gradient;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            W,
+            H
+        );
+
+    }
+
+
+    /* =================================================
+       大面积环境金光
+    ================================================= */
+
+    function drawAmbientLight(){
+
+        /* 左侧 */
+
+        const left =
+            ctx.createRadialGradient(
+
+                W * .02,
+                H * .48,
+                0,
+
+                W * .02,
+                H * .48,
+                W * .48
+
+            );
+
+
+        left.addColorStop(
+            0,
+            "rgba(255,190,70,.16)"
+        );
+
+
+        left.addColorStop(
+            .3,
+            "rgba(220,160,50,.07)"
+        );
+
+
+        left.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+
+        ctx.fillStyle =
+            left;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            W,
+            H
+        );
+
+
+        /* 右上 */
+
+        const right =
+            ctx.createRadialGradient(
+
+                W * .98,
+                H * .02,
+                0,
+
+                W * .98,
+                H * .02,
+                W * .55
+
+            );
+
+
+        right.addColorStop(
+            0,
+            "rgba(255,210,120,.22)"
+        );
+
+
+        right.addColorStop(
+            .3,
+            "rgba(220,160,55,.08)"
+        );
+
+
+        right.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+
+        ctx.fillStyle =
+            right;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            W,
+            H
+        );
+
+    }
+
+
+    /* =================================================
+       绘制大型金色丝带
+    ================================================= */
+
+    function drawRibbon(
+        offset,
+        speed,
+        amplitude,
+        thickness,
+        opacity
+    ){
+
+        const phase =
+            time * speed +
+            offset;
+
+
+        const points = [];
+
+
+        const segments = 100;
+
+
+        for(
+            let i = 0;
+            i <= segments;
+            i++
+        ){
+
+            const t =
+                i / segments;
+
+
+            const x =
+                -W * .18 +
+                W * 1.36 * t;
+
+
+            /* 第一层大弯曲 */
+
+            const wave1 =
+                Math.sin(
+                    t * Math.PI * 2.05 +
+                    phase
+                ) *
+                amplitude;
+
+
+            /* 第二层弯曲 */
+
+            const wave2 =
+                Math.sin(
+                    t * Math.PI * 4.2 +
+                    phase * .65
+                ) *
+                amplitude *
+                .20;
+
+
+            /* 慢慢上下呼吸 */
+
+            const wave3 =
+                Math.sin(
+                    t * Math.PI * 1.15 +
+                    phase * .4
+                ) *
+                amplitude *
+                .12;
+
+
+            const y =
+                H * .48 +
+                wave1 +
+                wave2 +
+                wave3;
+
+
+            points.push({
+                x:x,
+                y:y
+            });
+
+        }
+
+
+        ctx.save();
+
+
+        /* =================================================
+           外部巨大金色光晕
+        ================================================= */
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            points[0].x,
+            points[0].y
+        );
+
+
+        for(
+            let i = 1;
+            i < points.length;
+            i++
+        ){
+
+            ctx.lineTo(
+                points[i].x,
+                points[i].y
+            );
+
+        }
+
+
+        ctx.strokeStyle =
+            "rgba(255,190,65," +
+            opacity * .20 +
+            ")";
+
+
+        ctx.lineWidth =
+            thickness * 2.7;
+
+
+        ctx.lineCap =
+            "round";
+
+
+        ctx.shadowBlur =
+            80;
+
+
+        ctx.shadowColor =
+            "rgba(255,180,50,.65)";
+
+
+        ctx.stroke();
+
+
+        /* =================================================
+           金色丝带主体
+        ================================================= */
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            points[0].x,
+            points[0].y
+        );
+
+
+        for(
+            let i = 1;
+            i < points.length;
+            i++
+        ){
+
+            ctx.lineTo(
+                points[i].x,
+                points[i].y
+            );
+
+        }
+
+
+        const gradient =
+            ctx.createLinearGradient(
+                0,
+                0,
+                W,
+                H
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "rgba(255,180,50,0)"
+        );
+
+
+        gradient.addColorStop(
+            .12,
+            "rgba(255,205,105," +
+            opacity * .45 +
+            ")"
+        );
+
+
+        gradient.addColorStop(
+            .30,
+            "rgba(255,230,165," +
+            opacity +
+            ")"
+        );
+
+
+        gradient.addColorStop(
+            .48,
+            "rgba(255,190,65," +
+            opacity * .75 +
+            ")"
+        );
+
+
+        gradient.addColorStop(
+            .66,
+            "rgba(255,225,145," +
+            opacity * .9 +
+            ")"
+        );
+
+
+        gradient.addColorStop(
+            .86,
+            "rgba(255,185,55," +
+            opacity * .4 +
+            ")"
+        );
+
+
+        gradient.addColorStop(
+            1,
+            "rgba(255,195,75,0)"
+        );
+
+
+        ctx.strokeStyle =
+            gradient;
+
+
+        ctx.lineWidth =
+            thickness;
+
+
+        ctx.lineCap =
+            "round";
+
+
+        ctx.shadowBlur =
+            32;
+
+
+        ctx.shadowColor =
+            "rgba(255,195,70,.75)";
+
+
+        ctx.stroke();
+
+
+        /* =================================================
+           丝带内部流光
+        ================================================= */
+
+        for(
+            let line = -3;
+            line <= 3;
+            line++
+        ){
+
+            ctx.beginPath();
+
+
+            for(
+                let i = 0;
+                i < points.length;
+                i++
+            ){
+
+                const p =
+                    points[i];
+
+
+                const t =
+                    i /
+                    (points.length - 1);
+
+
+                const offsetY =
+                    line *
+                    thickness *
+                    .105;
+
+
+                const yy =
+                    p.y +
+                    offsetY +
+                    Math.sin(
+                        t * 12 +
+                        time * .0007 +
+                        line
+                    ) * 2;
+
+
+                if(i === 0){
+
+                    ctx.moveTo(
+                        p.x,
+                        yy
+                    );
+
+                }else{
+
+                    ctx.lineTo(
+                        p.x,
+                        yy
+                    );
+
+                }
+
+            }
+
+
+            ctx.strokeStyle =
+                "rgba(255,238,185," +
+                opacity * .11 +
+                ")";
+
+
+            ctx.lineWidth =
+                1;
+
+
+            ctx.shadowBlur =
+                8;
+
+
+            ctx.stroke();
+
+        }
+
+
+        ctx.restore();
+
+    }
+
+
+    /* =================================================
+       粒子
+    ================================================= */
 
     function drawParticles(){
 
-        for(let i=0;i<particles.length;i++){
+        for(
+            let i = 0;
+            i < particles.length;
+            i++
+        ){
 
-            const p = particles[i];
+            const p =
+                particles[i];
+
+
+            /* 向上漂浮 */
 
             p.y -= p.speed;
 
-            p.x += Math.sin(
-                time * .001 +
-                p.phase
-            ) * .10;
+
+            /* 左右轻微摆动 */
+
+            p.x +=
+                Math.sin(
+                    time * .001 +
+                    p.phase
+                ) *
+                p.drift *
+                .035;
+
+
+            /* 出屏幕重新生成 */
 
             if(p.y < -20){
-                p.y = height + 20;
-                p.x = Math.random() * width;
+
+                p.y =
+                    H + 20;
+
+                p.x =
+                    Math.random() * W;
+
             }
 
-            if(p.x < -20){
-                p.x = width + 20;
-            }
-
-            if(p.x > width + 20){
-                p.x = -20;
-            }
 
             const twinkle =
                 .55 +
                 Math.sin(
-                    time * .004 +
+                    time *
+                    p.twinkle +
                     p.phase
-                ) * .45;
+                ) *
+                .45;
+
 
             ctx.beginPath();
 
+
             ctx.fillStyle =
-                "rgba(255,215,130," +
-                (p.alpha * twinkle) +
+                "rgba(255,215,125," +
+                p.alpha *
+                twinkle +
                 ")";
 
+
             ctx.shadowBlur =
-                p.size > 1 ? 12 : 5;
+                p.size > 1.2
+                ? 10
+                : 4;
+
 
             ctx.shadowColor =
-                "rgba(255,200,90,.8)";
+                "rgba(255,195,70,.8)";
+
 
             ctx.arc(
                 p.x,
@@ -695,319 +1877,462 @@ document.getElementById("pwdMask").addEventListener("click",function(e){
                 Math.PI * 2
             );
 
+
             ctx.fill();
+
         }
 
+
         ctx.shadowBlur = 0;
+
     }
 
-    function drawLeftRing(){
 
-        const x = width * -.28;
-        const y = height * .55;
+    /* =================================================
+       大型星光
+    ================================================= */
 
-        const radius =
-            Math.min(width,height) * .68;
+    function drawStars(){
 
-        const move =
-            Math.sin(time * .00035) * .045;
+        for(
+            let i = 0;
+            i < stars.length;
+            i++
+        ){
 
-        const start = .20 + move;
-        const end = 1.58 + move;
+            const s =
+                stars[i];
 
-        const gradient =
-            ctx.createRadialGradient(
-                x,y,radius - 75,
-                x,y,radius + 75
+
+            const pulse =
+                .5 +
+                Math.sin(
+                    time *
+                    s.speed +
+                    s.phase
+                ) *
+                .5;
+
+
+            const alpha =
+                s.alpha *
+                (.55 +
+                pulse * .45);
+
+
+            /* 光点 */
+
+            ctx.beginPath();
+
+
+            ctx.fillStyle =
+                "rgba(255,215,125," +
+                alpha +
+                ")";
+
+
+            ctx.shadowBlur =
+                16 +
+                s.size * 5;
+
+
+            ctx.shadowColor =
+                "rgba(255,190,60,.95)";
+
+
+            ctx.arc(
+                s.x,
+                s.y,
+                s.size,
+                0,
+                Math.PI * 2
             );
 
-        gradient.addColorStop(
-            0,
-            "rgba(255,220,150,0)"
-        );
 
-        gradient.addColorStop(
-            .43,
-            "rgba(255,210,120,.04)"
-        );
+            ctx.fill();
 
-        gradient.addColorStop(
-            .50,
-            "rgba(255,215,130,.62)"
-        );
 
-        gradient.addColorStop(
-            .56,
-            "rgba(255,195,90,.22)"
-        );
+            /* 十字星 */
 
-        gradient.addColorStop(
-            1,
-            "rgba(255,220,160,0)"
-        );
+            if(s.size > 2){
 
-        ctx.beginPath();
+                ctx.beginPath();
 
-        ctx.strokeStyle = gradient;
 
-        ctx.lineWidth =
-            width <= 768 ? 42 : 82;
+                ctx.strokeStyle =
+                    "rgba(255,230,165," +
+                    alpha * .65 +
+                    ")";
 
-        ctx.lineCap = "round";
 
-        ctx.shadowBlur = 38;
+                ctx.lineWidth =
+                    .8;
 
-        ctx.shadowColor =
-            "rgba(255,195,80,.55)";
 
-        ctx.arc(
-            x,
-            y,
-            radius,
-            start,
-            end
-        );
+                ctx.moveTo(
+                    s.x - s.size * 4,
+                    s.y
+                );
 
-        ctx.stroke();
+
+                ctx.lineTo(
+                    s.x + s.size * 4,
+                    s.y
+                );
+
+
+                ctx.moveTo(
+                    s.x,
+                    s.y - s.size * 4
+                );
+
+
+                ctx.lineTo(
+                    s.x,
+                    s.y + s.size * 4
+                );
+
+
+                ctx.stroke();
+
+            }
+
+        }
+
+
+        ctx.shadowBlur = 0;
+
     }
 
-    function drawRightRing(){
 
-        const x = width * 1.28;
-        const y = height * .45;
+    /* =================================================
+       底部金色反光
+    ================================================= */
 
-        const radius =
-            Math.min(width,height) * .63;
-
-        const move =
-            Math.sin(time * .0004) * .045;
-
-        const start = -2.72 + move;
-        const end = -1.34 + move;
-
-        const gradient =
-            ctx.createRadialGradient(
-                x,y,radius - 75,
-                x,y,radius + 75
-            );
-
-        gradient.addColorStop(
-            0,
-            "rgba(255,220,150,0)"
-        );
-
-        gradient.addColorStop(
-            .43,
-            "rgba(255,210,120,.05)"
-        );
-
-        gradient.addColorStop(
-            .50,
-            "rgba(255,215,130,.70)"
-        );
-
-        gradient.addColorStop(
-            .57,
-            "rgba(255,195,90,.25)"
-        );
-      gradient.addColorStop(
-            1,
-            "rgba(255,220,160,0)"
-        );
-
-        ctx.beginPath();
-
-        ctx.strokeStyle = gradient;
-
-        ctx.lineWidth =
-            width <= 768 ? 45 : 92;
-
-        ctx.lineCap = "round";
-
-        ctx.shadowBlur = 42;
-
-        ctx.shadowColor =
-            "rgba(255,195,80,.65)";
-
-        ctx.arc(
-            x,
-            y,
-            radius,
-            start,
-            end
-        );
-
-        ctx.stroke();
-    }
-
-    function drawFlowLine(){
+    function drawBottomGlow(){
 
         const y =
-            height * .53;
+            H * .91;
 
-        const pulse =
-            .75 +
-            Math.sin(time * .003) * .25;
 
-        const gradient =
-            ctx.createLinearGradient(
-                0,y,width,y
+        const glow =
+            ctx.createRadialGradient(
+
+                W * .5,
+                y,
+                0,
+
+                W * .5,
+                y,
+                W * .65
+
             );
 
-        gradient.addColorStop(
+
+        glow.addColorStop(
             0,
-            "rgba(255,215,130,0)"
+            "rgba(255,190,65,.16)"
         );
 
-        gradient.addColorStop(
-            .20,
-            "rgba(255,215,130,.03)"
+
+        glow.addColorStop(
+            .3,
+            "rgba(220,150,45,.06)"
         );
 
-        gradient.addColorStop(
-            .50,
-            "rgba(255,215,130," +
-            (.18 * pulse) +
-            ")"
-        );
 
-        gradient.addColorStop(
-            .80,
-            "rgba(255,215,130,.03)"
-        );
-
-        gradient.addColorStop(
+        glow.addColorStop(
             1,
-            "rgba(255,215,130,0)"
+            "rgba(0,0,0,0)"
         );
+
+
+        ctx.fillStyle =
+            glow;
+
+
+        ctx.fillRect(
+            0,
+            H * .72,
+            W,
+            H * .28
+        );
+
+
+        /* 横向电影光线 */
+
+        const line =
+            ctx.createLinearGradient(
+                0,
+                0,
+                W,
+                0
+            );
+
+
+        line.addColorStop(
+            0,
+            "rgba(255,190,70,0)"
+        );
+
+
+        line.addColorStop(
+            .25,
+            "rgba(255,210,110,.06)"
+        );
+
+
+        line.addColorStop(
+            .5,
+            "rgba(255,225,145,.25)"
+        );
+
+
+        line.addColorStop(
+            .75,
+            "rgba(255,210,110,.06)"
+        );
+
+
+        line.addColorStop(
+            1,
+            "rgba(255,190,70,0)"
+        );
+
 
         ctx.beginPath();
 
-        ctx.strokeStyle = gradient;
+
+        ctx.strokeStyle =
+            line;
+
 
         ctx.lineWidth =
-            width <= 768 ? 4 : 8;
+            2;
 
-        ctx.shadowBlur = 20;
+
+        ctx.shadowBlur =
+            20;
+
 
         ctx.shadowColor =
-            "rgba(255,195,80,.45)";
+            "rgba(255,195,70,.45)";
 
-        ctx.moveTo(0,y);
-        ctx.lineTo(width,y);
+
+        ctx.moveTo(
+            0,
+            y
+        );
+
+
+        ctx.lineTo(
+            W,
+            y
+        );
+
 
         ctx.stroke();
+
+
+        ctx.shadowBlur = 0;
+
     }
 
-    function drawCenterGlow(){
 
-        const x = width / 2;
-        const y = height / 2;
+    /* =================================================
+       顶部镜头光晕
+    ================================================= */
 
-        const size =
-            Math.min(width,height) * .43;
+    function drawLensGlow(){
+
+        const move =
+            Math.sin(
+                time * .00025
+            );
+
+
+        const x =
+            W *
+            (.82 + move * .04);
+
+
+        const y =
+            H * .03;
+
+
+        const radius =
+            Math.min(W,H) *
+            .48;
+
 
         const gradient =
             ctx.createRadialGradient(
-                x,y,0,
-                x,y,size
+
+                x,
+                y,
+                0,
+
+                x,
+                y,
+                radius
+
             );
+
 
         gradient.addColorStop(
             0,
-            "rgba(255,215,130,.10)"
+            "rgba(255,225,160,.18)"
         );
 
+
         gradient.addColorStop(
-            .35,
-            "rgba(190,135,45,.045)"
+            .2,
+            "rgba(255,200,95,.07)"
         );
+
+
+        gradient.addColorStop(
+            .55,
+            "rgba(255,180,60,.02)"
+        );
+
 
         gradient.addColorStop(
             1,
             "rgba(0,0,0,0)"
         );
 
-        ctx.fillStyle = gradient;
 
-        ctx.beginPath();
+        ctx.fillStyle =
+            gradient;
 
-        ctx.arc(
-            x,
-            y,
-            size,
+
+        ctx.fillRect(
             0,
-            Math.PI * 2
+            0,
+            W,
+            H
         );
 
-        ctx.fill();
     }
+
+
+    /* =================================================
+       动画
+    ================================================= */
 
     function animate(){
 
         time++;
 
+
         ctx.clearRect(
             0,
             0,
-            width,
-            height
+            W,
+            H
         );
 
-        /* 最底层黑色 */
-        ctx.fillStyle = "#030303";
 
-        ctx.fillRect(
+        /* 黑色底 */
+
+        drawBackground();
+
+
+        /* 环境光 */
+
+        drawAmbientLight();
+
+
+        /* 顶部镜头光 */
+
+        drawLensGlow();
+
+
+        /* =================================================
+           三条金色丝带
+        ================================================= */
+
+        drawRibbon(
             0,
-            0,
-            width,
-            height
+            .00040,
+            Math.min(W,H) * .27,
+            W < 768 ? 30 : 78,
+            .72
         );
 
-        drawCenterGlow();
-        drawLeftRing();
-        drawRightRing();
-        drawFlowLine();
+
+        drawRibbon(
+            2.1,
+            .00032,
+            Math.min(W,H) * .23,
+            W < 768 ? 22 : 58,
+            .48
+        );
+
+
+        drawRibbon(
+            4.3,
+            .00025,
+            Math.min(W,H) * .13,
+            W < 768 ? 7 : 16,
+            .28
+        );
+
+
+        /* 粒子 */
+
         drawParticles();
 
-        requestAnimationFrame(animate);
+
+        /* 星光 */
+
+        drawStars();
+
+
+        /* 底部光 */
+
+        drawBottomGlow();
+
+
+        requestAnimationFrame(
+            animate
+        );
+
     }
 
+
+    /* =================================================
+       启动
+    ================================================= */
+
     resize();
+
     createParticles();
+
     animate();
+
+
+    /* =================================================
+       窗口改变大小
+    ================================================= */
 
     window.addEventListener(
         "resize",
         function(){
+
             resize();
+
             createParticles();
+
         }
     );
 
+
 })();
+
 </script>
 
-<!-- =========================
-     51.la 统计
-========================= -->
-<script
-    charset="UTF-8"
-    id="LA_COLLECT"
-    src="//sdk.51.la/js-sdk-pro.min.js"
-    defer>
-</script>
-
-<script>
-window.addEventListener("load",function(){
-    if(typeof LA !== "undefined"){
-        LA.init({
-            id:"3QtEnpgkxnuItnfC",
-            ck:"3QtEnpgkxnuItnfC"
-        });
-    }
-});
-</script>
 
 </body>
 </html>
