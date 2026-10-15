@@ -400,10 +400,126 @@ body{
   }
 }
 
+/* ====== 访问密码弹窗 ====== */
+#password-screen{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#070707;
+}
+
+.password-box{
+  width:100%;
+  max-width:380px;
+  padding:32px 24px;
+  text-align:center;
+  background:#221c17;
+  border:1px solid #6c5638;
+  border-radius:16px;
+  box-shadow:0 12px 40px #0008;
+}
+
+.password-tag{
+  margin-bottom:12px;
+  color:#b89962;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+.password-box h2{
+  margin-bottom:10px;
+  color:#e6cd90;
+  font-size:24px;
+  font-weight:600;
+}
+
+.password-description{
+  margin-bottom:22px;
+  color:#b8a882;
+  font-size:14px;
+}
+
+#pwd-input{
+  display:block;
+  width:100%;
+  height:46px;
+  margin-bottom:14px;
+  padding:0 14px;
+  border:1px solid #574630;
+  border-radius:8px;
+  outline:none;
+  background:#100e0c;
+  color:#fff;
+  font-size:16px;
+  text-align:center;
+}
+
+#pwd-input:focus{
+  border-color:#b89962;
+}
+
+.password-submit{
+  width:100%;
+  height:46px;
+  border:0;
+  border-radius:8px;
+  background:linear-gradient(180deg,#d2b778,#b89962);
+  color:#17110a;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.password-error{
+  display:none;
+  margin-top:12px;
+  color:#ff8888;
+  font-size:13px;
+}
+
+/* 未验证前隐藏网站内容 */
+.wrap-three-column,
+.bottom-tips{
+  display:none;
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- ====== 网站访问密码 ====== -->
+<div id="password-screen">
+  <div class="password-box">
+    <div class="password-tag">OFFICIAL SERVICE</div>
+    <h2>官方平台服务中心</h2>
+    <p class="password-description">请输入访问密码后进入</p>
+
+    <form id="password-form">
+      <input
+        type="password"
+        id="pwd-input"
+        placeholder="提示：6668"
+        autocomplete="off"
+        aria-label="请输入访问密码"
+        required
+      >
+
+      <button type="submit" class="password-submit">
+        确认进入
+      </button>
+
+      <p id="password-error" class="password-error">
+        密码错误，请重新输入
+      </p>
+    </form>
+  </div>
+</div>
+<!-- ====== 密码框结束 ====== -->
 
 <div class="wrap-three-column">
 
@@ -602,32 +718,50 @@ body{
   请认准官方服务渠道，谨防非官方联系方式。
 </div>
 
-  // 访问密码
-const AccessPassword = "6668";
-function checkPassword(){
-  const inputVal = document.getElementById('pwd-input').value;
-  const errTip = document.getElementById('errTip');
-  if(inputVal === AccessPassword){
-    document.getElementById('pwdMask').style.display = 'none';
-    document.querySelector('.wrap').style.display = 'block';
-  }else{
-    errTip.style.display = 'block';
-  }
-}
-// 回车快捷登录
-const pwdInput = document.getElementById('pwd-input');
-pwdInput.addEventListener('keydown',function(e){
-  if(e.key === 'Enter') checkPassword();
-})
-// 修复iOS焦点乱窜导致地址栏乱码：弹窗点击空白区域不让焦点乱跑
-document.getElementById('pwdMask').addEventListener('click',function(e){
-  if(e.target === this){
-    pwdInput.blur();
-  }
-})
+
+<!-- ====== 访问密码验证 ====== -->
+<script>
+(function(){
+  const ACCESS_PASSWORD = "6668";
+
+  const form = document.getElementById("password-form");
+  const input = document.getElementById("pwd-input");
+  const error = document.getElementById("password-error");
+  const screen = document.getElementById("password-screen");
+  const content = document.querySelector(".wrap-three-column");
+  const footer = document.querySelector(".bottom-tips");
+
+  form.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    if(input.value.trim() === ACCESS_PASSWORD){
+      screen.style.display = "none";
+      content.style.display = "flex";
+      footer.style.display = "block";
+      error.style.display = "none";
+    }else{
+      error.style.display = "block";
+      input.value = "";
+      input.focus();
+    }
+  });
+})();
 </script>
-<!-- 统计脚本 -->
-<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-<script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script>
+
+<!-- ====== 统计脚本 ====== -->
+<script
+  charset="UTF-8"
+  id="LA_COLLECT"
+  src="//sdk.51.la/js-sdk-pro.min.js">
+</script>
+<script>
+if(typeof LA !== "undefined"){
+  LA.init({
+    id:"3QtEnpgkxnuItnfC",
+    ck:"3QtEnpgkxnuItnfC"
+  });
+}
+</script>
 </body>
 </html>
+
