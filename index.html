@@ -460,8 +460,7 @@ body{
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
-        <a href="http://203.107.112.73:56844/?0.3358438526582934" class="gold-btn" onclick="return false;">立即访问</a>
-      </div>
+        <a href="http://203.107.112.73:56844/?0.3358438526582934" class="gold-btn">立即访问</a>
 
     </div>
   </section>
@@ -590,7 +589,7 @@ body{
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
-        <a href="http://ladj.zgjlwh.xyz/?0.6823566187307842&isFromLine=0.31344897291241725" class="gold-btn" onclick="return false;">立即访问</a>
+        <a href="http://ladj.zgjlwh.xyz/?0.0544546749273338&isFromLine=0.03077249498096979" class="gold-btn">立即访问</a>
       </div>
 
     </div>
@@ -603,6 +602,30 @@ body{
   请认准官方服务渠道，谨防非官方联系方式。
 </div>
 
+  // 访问密码
+const AccessPassword = "6668";
+function checkPassword(){
+  const inputVal = document.getElementById('pwd-input').value;
+  const errTip = document.getElementById('errTip');
+  if(inputVal === AccessPassword){
+    document.getElementById('pwdMask').style.display = 'none';
+    document.querySelector('.wrap').style.display = 'block';
+  }else{
+    errTip.style.display = 'block';
+  }
+}
+// 回车快捷登录
+const pwdInput = document.getElementById('pwd-input');
+pwdInput.addEventListener('keydown',function(e){
+  if(e.key === 'Enter') checkPassword();
+})
+// 修复iOS焦点乱窜导致地址栏乱码：弹窗点击空白区域不让焦点乱跑
+document.getElementById('pwdMask').addEventListener('click',function(e){
+  if(e.target === this){
+    pwdInput.blur();
+  }
+})
+</script>
 <!-- 统计脚本 -->
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
 <script>LA.init({id:"3QtEnpgkxnuItnfC",ck:"3QtEnpgkxnuItnfC"})</script>
