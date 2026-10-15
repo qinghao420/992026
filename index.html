@@ -290,6 +290,116 @@ body{
     font-size:12px;
   }
 }
+  
+/* ====== 手机端专属布局 ====== */
+@media(max-width:768px){
+
+  body{
+    padding:16px 12px;
+  }
+
+  /* 手机端改成上下排列 */
+  .wrap-three-column{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .col-item{
+    width:100%;
+    flex:none;
+  }
+
+  /* 欧亚官方服务中心排在最上面 */
+  .col-item:nth-child(2){
+    order:1;
+  }
+
+  /* 环球官网缩小并排在第二 */
+  .col-item:nth-child(1){
+    order:2;
+  }
+
+  /* 利澳官网缩小并排在第三 */
+  .col-item:nth-child(3){
+    order:3;
+  }
+
+  /* 欧亚顶部卡片保留完整尺寸 */
+  .col-item:nth-child(2) .top-card{
+    padding:24px 16px;
+  }
+
+  .col-item:nth-child(2) .top-card h1{
+    font-size:25px;
+  }
+
+  /* 环球和利澳顶部卡片缩小 */
+  .col-item:nth-child(1) .top-card,
+  .col-item:nth-child(3) .top-card{
+    height:auto;
+    min-height:0;
+    padding:14px 12px;
+  }
+
+  .col-item:nth-child(1) .top-card h1,
+  .col-item:nth-child(3) .top-card h1{
+    font-size:20px;
+    line-height:30px;
+  }
+
+  .col-item:nth-child(1) .top-tag,
+  .col-item:nth-child(3) .top-tag{
+    font-size:11px;
+    line-height:16px;
+    margin-bottom:2px;
+  }
+
+  .col-item:nth-child(1) .top-card p,
+  .col-item:nth-child(3) .top-card p{
+    font-size:12px;
+    line-height:19px;
+  }
+
+  .col-item:nth-child(1) .top-card .site-line,
+  .col-item:nth-child(3) .top-card .site-line{
+    margin-top:5px;
+    font-size:11px;
+  }
+
+  /* 统一下方入口卡片间距 */
+  .main-card{
+    margin-top:10px;
+    padding:12px;
+  }
+
+  .download-row{
+    min-height:54px;
+    gap:6px;
+    padding:8px 0;
+  }
+
+  .left-group{
+    gap:8px;
+  }
+
+  .icon-box,
+  .icon-box img{
+    width:30px;
+    height:30px;
+  }
+
+  .text-name{
+    font-size:13px;
+  }
+
+  .gold-btn{
+    min-width:78px;
+    padding:8px 10px;
+    font-size:12px;
+  }
+}
+
 </style>
 </head>
 
@@ -350,7 +460,7 @@ body{
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
-        <a href="#" class="gold-btn" onclick="return false;">待补充链接</a>
+        <a href="http://203.107.112.73:56844/?0.3358438526582934" class="gold-btn" onclick="return false;">立即访问</a>
       </div>
 
     </div>
@@ -480,7 +590,7 @@ body{
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
-        <a href="#" class="gold-btn" onclick="return false;">待补充链接</a>
+        <a href="http://ladj.zgjlwh.xyz/?0.6823566187307842&isFromLine=0.31344897291241725" class="gold-btn" onclick="return false;">立即访问</a>
       </div>
 
     </div>
