@@ -2,376 +2,276 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- 优化viewport，禁止缩放，解决iOS基础兼容 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>官方服务中心</title>
-
+<title>多平台服务中心</title>
 <style>
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+body {
+  min-height: 100vh;
+  background-color: #070707;
+  font-family: "Microsoft YaHei", PingFang SC, sans-serif;
+  padding:40px 20px;
 }
 
-html{
-  -webkit-text-size-adjust:100%;
-  text-size-adjust:100%;
-}
-
-body{
-  min-height:100vh;
-  background-color:#000000;
-  font-family:"Microsoft YaHei",PingFang SC,sans-serif;
+/* ======最外层三栏容器====== */
+.wrap-three-column{
+  max-width:1400px;
+  margin:0 auto;
   display:flex;
-  align-items:center;
+  gap:24px; /*三栏之间空隙*/
   justify-content:center;
-  padding:20px;
-  position:relative;
-  overflow-x:hidden;
+  align-items:flex-start;
 }
 
-.wrap{
-  width:100%;
-  max-width:520px;
-  display:none;
-  position:relative;
-  z-index:1;
+/* 每一栏 */
+.col-item{
+  flex:1;
+  min-width:280px;
 }
 
-/* 密码弹窗 */
-.password-mask{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  -webkit-transform:translateZ(0);
-  transform:translateZ(0);
-}
-
-.password-box{
-  width:90%;
-  max-width:400px;
-  background-color:#18140e;
-  border:1px solid #3a3324;
-  border-radius:16px;
-  padding:36px 26px;
-  text-align:center;
-  -webkit-transform:translateZ(0);
-  transform:translateZ(0);
-}
-
-.password-box h3{
-  color:#e6cd90;
-  font-size:22px;
-  margin-bottom:24px;
-}
-
-#pwd-input{
-  width:100%;
-  padding:14px 16px;
-  background:#111;
-  border:1px solid #443c2c;
-  border-radius:10px;
-  color:#fff;
-  font-size:16px;
-  outline:none;
-  margin-bottom:16px;
-  -webkit-appearance:none;
-  appearance:none;
-}
-
-#pwd-input:focus{
-  border-color:#d4bc84;
-}
-
-.submit-pwd{
-  width:100%;
-  padding:14px;
-  background:linear-gradient(180deg,#c9b278,#998450);
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  color:#000;
-  font-weight:500;
-  cursor:pointer;
-  -webkit-appearance:none;
-  appearance:none;
-  touch-action:manipulation;
-}
-
-.submit-pwd:active{
-  transform:scale(.98);
-}
-
-.tip-error{
-  color:#ff7777;
-  margin-top:12px;
-  font-size:14px;
-  display:none;
-}
-
-/* 顶部卡片 */
+/* 你原来卡片样式（保留你原有全部css，这里只放布局关键） */
 .top-card{
-  background-color:#18140e;
-  border:1px solid #3a3324;
-  border-radius:16px;
-  padding:30px 20px;
+  background:#221c17;
+  border:1px solid #44382b;
+  border-radius:14px;
+  padding:26px 22px;
   text-align:center;
-  margin-bottom:20px;
+  color:#d4bc88;
 }
-
-.top-tag{
-  font-size:14px;
-  color:#d4bc84;
-  letter-spacing:1px;
-  border:1px solid #d4bc8470;
-  display:inline-block;
-  padding:4px 14px;
-  border-radius:20px;
-  margin-bottom:12px;
-}
-
-.top-card h1{
-  font-size:32px;
-  color:#e6cd90;
-  font-weight:normal;
-  letter-spacing:2px;
-}
-
-.top-card p{
-  color:#b8a882;
-  font-size:14px;
-  line-height:1.7;
-  margin-top:8px;
-}
-
-.top-card a{
-  color:#e6cd90;
-  text-decoration:none;
-  display:inline-block;
-}
-
-.top-card a:hover{
-  text-decoration:underline;
-}
-
-/* 主体卡片 */
 .main-card{
-  background-color:#18140e;
-  border:1px solid #3a3324;
-  border-radius:16px;
-  padding:36px 26px;
-  text-align:center;
+  margin-top:16px;
+  background:#1a1511;
+  border:1px solid #382f24;
+  border-radius:14px;
+  padding:20px 22px;
 }
-
-/* 下载项目 */
 .download-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:22px;
+  padding:14px 0;
+  border-bottom:1px solid #2c251e;
 }
-
 .download-row:last-child{
-  margin-bottom:0;
+  border-bottom:none;
 }
-
 .left-group{
   display:flex;
   align-items:center;
   gap:12px;
-  min-width:0;
 }
-
-.icon-box{
-  width:40px;
-  height:40px;
-  flex-shrink:0;
-  border-radius:8px;
-  background:#272218;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#e6cd90;
-  font-size:22px;
-  border:1px solid #443c2c;
-  overflow:hidden;
-}
-
 .icon-box img{
-  width:40px;
-  height:40px;
+  width:34px;
+  height:34px;
   object-fit:cover;
-  border-radius:8px;
-  display:block;
 }
-
 .text-name{
-  color:#e2d3ad;
-  font-size:16px;
-  white-space:nowrap;
-}
-
-/* 下载按钮 */
-.gold-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-  padding:10px 26px;
-  background:linear-gradient(180deg,#c9b278,#998450);
-  color:#000;
-  border:none;
-  border-radius:24px;
+  color:#e2cdab;
   font-size:15px;
+}
+.gold-btn{
+  padding:9px 22px;
+  background:#b89962;
+  color:#000;
+  border-radius:8px;
   text-decoration:none;
-  font-weight:500;
+  font-size:14px;
   white-space:nowrap;
-  cursor:pointer;
-  touch-action:manipulation;
-  -webkit-user-select:none;
-  user-select:none;
 }
 
-.gold-btn:hover{
-  filter:brightness(1.1);
-}
-
-.gold-btn:active{
-  transform:scale(.97);
-}
-
-/* 底部提示 */
-.bottom-tips{
-  text-align:center;
-  margin-top:24px;
-  color:#887c64;
-  font-size:12px;
-}
-
-/* 手机端 */
-@media screen and (max-width:768px){
-  .gold-btn{
-    padding:6px 14px;
-    font-size:12px;
-    white-space:nowrap;
+/* =========手机适配：小于768px，三栏变成上下堆叠========= */
+@media (max-width:768px){
+  .wrap-three-column{
+    flex-direction:column !important;
+    gap:32px;
   }
-
-  .text-name{
-    font-size:12px;
-    white-space:nowrap;
-  }
-
-  .download-row{
-    margin-bottom:12px;
-    flex-wrap:nowrap;
+  body{
+    padding:20px 14px;
   }
 }
+
 </style>
 </head>
-
 <body>
 
-<!-- 密码弹窗 -->
-<div class="password-mask" id="pwdMask">
-  <div class="password-box">
-    <h3>请输入访问密码</h3>
-    <input type="password" id="pwd-input" placeholder="提示：6668" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-    <button type="button" class="submit-pwd" id="submitPwd">确认进入</button>
-    <div class="tip-error" id="errTip">密码错误，请重新输入</div>
+<div class="wrap-three-column">
+
+  <!-- ==========【左侧：环球国际官网】========== -->
+  <div class="col-item">
+    <div class="top-card">
+      <div class="top-tag">OFFICIAL SERVICE</div>
+      <h1>环球国际官网</h1>
+      <p>环球APP官方下载通道</p>
+      <p style="margin-top:12px;font-size:15px;">环球官方网站：www.33201533.com</p>
+    </div>
+    <div class="main-card">
+      <!--环球APP下载 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="huanqiu.png" alt="环球APP">
+          </div>
+          <span class="text-name">环球APP下载</span>
+        </div>
+        <a href="https://down.zsysgz.com/hqq0820.apk" class="gold-btn">立即下载</a>
+      </div>
+      <!--代理登录入口 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">代理登录入口</span>
+        </div>
+        <a href="http://203.107.112.73:6155/?v=1792044330344" class="gold-btn">立即访问</a>
+      </div>
+      <!--手机版入口 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">手机版游戏入口</span>
+        </div>
+        <a href="http://203.107.112.73:35504/" class="gold-btn">立即访问</a>
+      </div>
+      <!--电脑版入口 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">电脑版游戏入口</span>
+        </div>
+        <a href="电脑版链接" class="gold-btn">立即访问</a>
+      </div>
+    </div>
   </div>
+
+  <!-- ==========【中间：你原来的欧亚官方服务中心】========== -->
+  <div class="col-item">
+    <div class="top-card">
+      <div class="top-tag">OFFICIAL SERVICE</div>
+      <h1>欧亚官方服务中心</h1>
+      <p>欧信APP官方下载通道</p>
+      <p style="margin-top:12px;font-size:15px;">欧信官方网站：6.18000.vip</p>
+      <div style="margin-top:18px;"></div>
+      <!--欧信APP下载放在顶部卡片内 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="ouxin2.png" alt="欧信APP">
+          </div>
+          <span class="text-name">欧信APP下载</span>
+        </div>
+        <a href="https://ox.kuailiao777.cn/?src=08" class="gold-btn">立即下载</a>
+      </div>
+    </div>
+    <div class="main-card">
+      <!--游戏APP下载 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="ouya.png" alt="游戏APP">
+          </div>
+          <span class="text-name">游戏APP下载</span>
+        </div>
+        <a href="http://154.221.19.55:53589/download/index.html?v=5" class="gold-btn">立即下载</a>
+      </div>
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">代理登录入口</span>
+        </div>
+        <a href="http://8.130.42.18:15501/?0.580711663846205" class="gold-btn">立即访问</a>
+      </div>
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">手机版游戏入口</span>
+        </div>
+        <a href="http://42.51.38.194:48806/" target="_blank" class="gold-btn">立即访问</a>
+      </div>
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">电脑版游戏入口</span>
+        </div>
+        <a href="http://47.76.34.41:25506/?0.06538403702842943" class="gold-btn">立即访问</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========【右侧：利澳国际官网】========== -->
+  <div class="col-item">
+    <div class="top-card">
+      <div class="top-tag">OFFICIAL SERVICE</div>
+      <h1>利澳国际官网</h1>
+      <p>利澳APP官方下载通道</p>
+      <p style="margin-top:12px;font-size:15px;">利澳官方网站：www.9992219.com</p>
+    </div>
+    <div class="main-card">
+      <!--利澳APP下载 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="liao.png" alt="利澳APP">
+          </div>
+          <span class="text-name">利澳APP下载</span>
+        </div>
+        <a href="https://downp.zgjlwh.xyz/Laandroid108.apk" class="gold-btn">立即下载</a>
+      </div>
+      <!--代理登录入口 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">代理登录入口</span>
+        </div>
+        <a href="https://latt.zgjlwh.xyz/?v=1792044459729" class="gold-btn">立即访问</a>
+      </div>
+      <!--手机版入口 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">手机版游戏入口</span>
+        </div>
+        <a href="http://117.50.226.218:6996/?v=0.15124387688924412" class="gold-btn">立即访问</a>
+      </div>
+      <!--电脑版入口 -->
+      <div class="download-row">
+        <div class="left-group">
+          <div class="icon-box">
+            <img src="icon.png" alt="">
+          </div>
+          <span class="text-name">电脑版游戏入口</span>
+        </div>
+        <a href="电脑版链接" class="gold-btn">立即访问</a>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="wrap">
-
-  <!-- 顶部信息 -->
-  <div class="top-card">
-    <div class="top-tag">OFFICIAL SERVICE</div>
-    <h1>欧亚官方服务中心</h1>
-    <p>欧信APP官方下载通道</p>
-    <p style="margin-top:12px;font-size:15px;">欧信官方网站：6.18000.vip</p>
-<!-- 欧信APP -->
-<div class="download-row">
-  <div class="left-group">
-    <div class="icon-box">
-      <img src="ouxin2.png" alt="欧信APP">
-    </div>
-    <span class="text-name">欧信APP下载</span>
-  </div>
-
-  <a
-    href="https://ox.kuailiao777.cn/?src=08"
-    class="gold-btn"
-    onclick="location.assign(this.href);return false;"
-  >
-    立即下载
-  </a>
+<!--底部提示文字 -->
+<div style="text-align:center;margin-top:30px;color:#888;font-size:13px;">
+请认准官方服务渠道，谨防非官方联系方式。
 </div>
-  
-  </div>
-  
-  <div class="main-card">
-
-
-
-    <!-- 欧亚游戏APP -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-          <img src="ouya.png" alt="游戏APP">
-        </div>
-        <span class="text-name">游戏APP下载</span>
-      </div>
-
-      <a href="http://114.67.150.192:53586/download/android.html?v=0.42484913466121554" class="gold-btn">立即下载</a>
-    </div>
-
-    <!-- 代理登录入口 -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-          <img src="ouya.png" alt="代理登录入口">
-        </div>
-        <span class="text-name">代理登录入口</span>
-      </div>
-
-      <a href="http://8.130.42.18:15501/?0.3646686125459059" class="gold-btn">立即访问</a>
-    </div>
-
-    <!-- 手机版游戏入口 -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-          <img src="ouya.png" alt="手机版游戏">
-        </div>
-        <span class="text-name">手机版游戏入口</span>
-      </div>
-
-      <a href="http://42.51.38.194:48806/?0.6731856555101532" class="gold-btn">立即访问</a>
-    </div>
-
-    <!-- 电脑版游戏入口 -->
-    <div class="download-row">
-      <div class="left-group">
-        <div class="icon-box">
-          <img src="ouya.png" alt="电脑版游戏">
-        </div>
-        <span class="text-name">电脑版游戏入口</span>
-      </div>
-
-      <a href="http://47.76.34.41:25506/?0.4853905392170381" class="gold-btn">立即访问</a>
-    </div>
-
-  </div>
-
-  <div class="bottom-tips">
-    请认准官方服务渠道，谨防非官方联系方式。
-  </div>
 
 </div>
 
