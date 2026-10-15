@@ -4,114 +4,312 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>多平台服务中心</title>
+
 <style>
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-body {
-  min-height: 100vh;
-  background-color: #070707;
-  font-family: "Microsoft YaHei", PingFang SC, sans-serif;
-  padding:40px 20px;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
 }
 
-/* ======最外层三栏容器====== */
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+body{
+  min-height:100vh;
+  background:#070707;
+  font-family:"Microsoft YaHei",PingFang SC,sans-serif;
+  padding:40px 20px;
+  color:#e2cdab;
+}
+
+/* ====== 三栏整体布局 ====== */
 .wrap-three-column{
+  width:100%;
   max-width:1400px;
   margin:0 auto;
   display:flex;
-  gap:24px; /*三栏之间空隙*/
+  align-items:stretch;
   justify-content:center;
-  align-items:flex-start;
+  gap:22px;
 }
 
-/* 每一栏 */
+/* ====== 三个栏目统一宽度 ====== */
 .col-item{
-  flex:1;
-  min-width:280px;
+  flex:1 1 0;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
 }
 
-/* 你原来卡片样式（保留你原有全部css，这里只放布局关键） */
+/* ====== 顶部卡片统一高度 ====== */
 .top-card{
+  height:228px;
+  min-height:228px;
   background:#221c17;
   border:1px solid #44382b;
   border-radius:14px;
-  padding:26px 22px;
+  padding:26px 18px;
   text-align:center;
   color:#d4bc88;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
 }
+
+.top-tag{
+  font-size:14px;
+  line-height:20px;
+  margin-bottom:4px;
+}
+
+.top-card h1{
+  font-size:28px;
+  line-height:38px;
+  margin:0;
+  white-space:nowrap;
+}
+
+.top-card p{
+  font-size:14px;
+  line-height:22px;
+  margin:0;
+}
+
+.top-card .site-line{
+  margin-top:12px;
+  font-size:15px;
+  overflow-wrap:anywhere;
+}
+
+.top-card a{
+  color:#d4bc88;
+  text-decoration:none;
+}
+
+.top-card a:hover{
+  text-decoration:underline;
+}
+
+/* ====== 下方入口卡片 ====== */
 .main-card{
-  margin-top:16px;
+  margin-top:14px;
+  flex:1;
   background:#1a1511;
   border:1px solid #382f24;
   border-radius:14px;
-  padding:20px 22px;
+  padding:16px 18px;
 }
+
+/* ====== 中间欧信下载入口 ====== */
+.top-card .download-row{
+  width:100%;
+  margin-top:16px;
+  padding:10px 0 0;
+  min-height:48px;
+  border-bottom:none;
+}
+
+/* ====== 每行入口统一间距 ====== */
 .download-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:14px 0;
+  gap:10px;
+  min-height:60px;
+  padding:10px 0;
   border-bottom:1px solid #2c251e;
 }
+
 .download-row:last-child{
   border-bottom:none;
 }
+
 .left-group{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
+  min-width:0;
 }
-.icon-box img{
+
+.icon-box{
   width:34px;
   height:34px;
-  object-fit:cover;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
+
+.icon-box img{
+  display:block;
+  width:34px;
+  height:34px;
+  object-fit:contain;
+}
+
 .text-name{
   color:#e2cdab;
-  font-size:15px;
+  font-size:14px;
+  white-space:nowrap;
 }
+
+/* ====== 下载及访问按钮 ====== */
 .gold-btn{
-  padding:9px 22px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  min-width:90px;
+  padding:9px 16px;
   background:#b89962;
   color:#000;
   border-radius:8px;
   text-decoration:none;
   font-size:14px;
   white-space:nowrap;
+  cursor:pointer;
 }
 
-/* =========手机适配：小于768px，三栏变成上下堆叠========= */
-@media (max-width:768px){
+.gold-btn:hover{
+  filter:brightness(1.08);
+}
+
+.gold-btn:active{
+  transform:scale(.98);
+}
+
+/* ====== 底部提示 ====== */
+.bottom-tips{
+  max-width:1400px;
+  margin:28px auto 0;
+  text-align:center;
+  color:#888;
+  font-size:13px;
+}
+
+/* ====== 平板适配 ====== */
+@media(max-width:1000px){
   .wrap-three-column{
-    flex-direction:column !important;
-    gap:32px;
+    gap:14px;
   }
+
+  .top-card{
+    padding:24px 10px;
+  }
+
+  .top-card h1{
+    font-size:23px;
+  }
+
+  .main-card{
+    padding:14px 12px;
+  }
+
+  .left-group{
+    gap:7px;
+  }
+
+  .text-name{
+    font-size:12px;
+  }
+
+  .gold-btn{
+    min-width:76px;
+    padding:8px 10px;
+    font-size:12px;
+  }
+}
+
+/* ====== 手机适配 ====== */
+@media(max-width:768px){
   body{
     padding:20px 14px;
   }
+
+  .wrap-three-column{
+    flex-direction:column;
+    gap:24px;
+  }
+
+  .col-item{
+    width:100%;
+    flex:none;
+  }
+
+  .top-card{
+    height:auto;
+    min-height:0;
+    padding:24px 16px;
+  }
+
+  .top-card h1{
+    font-size:26px;
+    line-height:38px;
+  }
+
+  .main-card{
+    margin-top:12px;
+    padding:16px;
+  }
+
+  .download-row{
+    min-height:58px;
+  }
+
+  .text-name{
+    font-size:14px;
+  }
+
+  .gold-btn{
+    min-width:90px;
+    padding:9px 16px;
+    font-size:14px;
+  }
 }
 
+/* ====== 小屏手机适配 ====== */
+@media(max-width:360px){
+  .main-card{
+    padding:12px;
+  }
+
+  .text-name{
+    font-size:12px;
+  }
+
+  .gold-btn{
+    min-width:78px;
+    padding:8px 10px;
+    font-size:12px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrap-three-column">
 
-  <!-- ==========【左侧：环球国际官网】========== -->
-  <div class="col-item">
+  <!-- ========== 左侧：环球国际官网 ========== -->
+  <section class="col-item">
+
     <div class="top-card">
       <div class="top-tag">OFFICIAL SERVICE</div>
       <h1>环球国际官网</h1>
       <p>环球APP官方下载通道</p>
-      <p style="margin-top:12px;font-size:15px;">环球官方网站：www.33201533.com</p>
+      <p class="site-line">环球官方网站：www.33201533.com</p>
     </div>
+
     <div class="main-card">
-      <!--环球APP下载 -->
+
+      <!-- 环球APP下载 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
@@ -121,48 +319,53 @@ body {
         </div>
         <a href="https://down.zsysgz.com/hqq0820.apk" class="gold-btn">立即下载</a>
       </div>
-      <!--代理登录入口 -->
+
+      <!-- 代理登录入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="代理入口">
           </div>
           <span class="text-name">代理登录入口</span>
         </div>
         <a href="http://203.107.112.73:6155/?v=1792044330344" class="gold-btn">立即访问</a>
       </div>
-      <!--手机版入口 -->
+
+      <!-- 手机版游戏入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="手机版游戏入口">
           </div>
           <span class="text-name">手机版游戏入口</span>
         </div>
         <a href="http://203.107.112.73:35504/" class="gold-btn">立即访问</a>
       </div>
-      <!--电脑版入口 -->
+
+      <!-- 电脑版游戏入口：填写实际网址后使用 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="电脑版游戏入口">
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
-        <a href="电脑版链接" class="gold-btn">立即访问</a>
+        <a href="#" class="gold-btn" onclick="return false;">待补充链接</a>
       </div>
-    </div>
-  </div>
 
-  <!-- ==========【中间：你原来的欧亚官方服务中心】========== -->
-  <div class="col-item">
+    </div>
+  </section>
+
+  <!-- ========== 中间：欧亚官方服务中心 ========== -->
+  <section class="col-item">
+
     <div class="top-card">
       <div class="top-tag">OFFICIAL SERVICE</div>
       <h1>欧亚官方服务中心</h1>
       <p>欧信APP官方下载通道</p>
-      <p style="margin-top:12px;font-size:15px;">欧信官方网站：6.18000.vip</p>
-      <div style="margin-top:18px;"></div>
-      <!--欧信APP下载放在顶部卡片内 -->
+      <p class="site-line">欧信官方网站：6.18000.vip</p>
+
+      <!-- 欧信APP下载 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
@@ -172,9 +375,12 @@ body {
         </div>
         <a href="https://ox.kuailiao777.cn/?src=08" class="gold-btn">立即下载</a>
       </div>
+
     </div>
+
     <div class="main-card">
-      <!--游戏APP下载 -->
+
+      <!-- 游戏APP下载 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
@@ -184,46 +390,56 @@ body {
         </div>
         <a href="http://154.221.19.55:53589/download/index.html?v=5" class="gold-btn">立即下载</a>
       </div>
+
+      <!-- 代理登录入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="代理入口">
           </div>
           <span class="text-name">代理登录入口</span>
         </div>
         <a href="http://8.130.42.18:15501/?0.580711663846205" class="gold-btn">立即访问</a>
       </div>
+
+      <!-- 手机版游戏入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="手机版游戏入口">
           </div>
           <span class="text-name">手机版游戏入口</span>
         </div>
-        <a href="http://42.51.38.194:48806/" target="_blank" class="gold-btn">立即访问</a>
+        <a href="http://42.51.38.194:48806/" class="gold-btn">立即访问</a>
       </div>
+
+      <!-- 电脑版游戏入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="电脑版游戏入口">
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
         <a href="http://47.76.34.41:25506/?0.06538403702842943" class="gold-btn">立即访问</a>
       </div>
-    </div>
-  </div>
 
-  <!-- ==========【右侧：利澳国际官网】========== -->
-  <div class="col-item">
+    </div>
+  </section>
+
+  <!-- ========== 右侧：利澳国际官网 ========== -->
+  <section class="col-item">
+
     <div class="top-card">
       <div class="top-tag">OFFICIAL SERVICE</div>
       <h1>利澳国际官网</h1>
       <p>利澳APP官方下载通道</p>
-      <p style="margin-top:12px;font-size:15px;">利澳官方网站：www.9992219.com</p>
+      <p class="site-line">利澳官方网站：www.9992219.com</p>
     </div>
+
     <div class="main-card">
-      <!--利澳APP下载 -->
+
+      <!-- 利澳APP下载 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
@@ -233,92 +449,49 @@ body {
         </div>
         <a href="https://downp.zgjlwh.xyz/Laandroid108.apk" class="gold-btn">立即下载</a>
       </div>
-      <!--代理登录入口 -->
+
+      <!-- 代理登录入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="代理入口">
           </div>
           <span class="text-name">代理登录入口</span>
         </div>
         <a href="https://latt.zgjlwh.xyz/?v=1792044459729" class="gold-btn">立即访问</a>
       </div>
-      <!--手机版入口 -->
+
+      <!-- 手机版游戏入口 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="手机版游戏入口">
           </div>
           <span class="text-name">手机版游戏入口</span>
         </div>
         <a href="http://117.50.226.218:6996/?v=0.15124387688924412" class="gold-btn">立即访问</a>
       </div>
-      <!--电脑版入口 -->
+
+      <!-- 电脑版游戏入口：填写实际网址后使用 -->
       <div class="download-row">
         <div class="left-group">
           <div class="icon-box">
-            <img src="icon.png" alt="">
+            <img src="icon.png" alt="电脑版游戏入口">
           </div>
           <span class="text-name">电脑版游戏入口</span>
         </div>
-        <a href="电脑版链接" class="gold-btn">立即访问</a>
+        <a href="#" class="gold-btn" onclick="return false;">待补充链接</a>
       </div>
+
     </div>
-  </div>
+  </section>
 
 </div>
 
-<!--底部提示文字 -->
-<div style="text-align:center;margin-top:30px;color:#888;font-size:13px;">
-请认准官方服务渠道，谨防非官方联系方式。
+<!-- 底部提示 -->
+<div class="bottom-tips">
+  请认准官方服务渠道，谨防非官方联系方式。
 </div>
-
-</div>
-
-<script>
-// 访问密码
-const AccessPassword="6668";
-
-const pwdMask=document.getElementById("pwdMask");
-const pwdInput=document.getElementById("pwd-input");
-const submitPwd=document.getElementById("submitPwd");
-const errTip=document.getElementById("errTip");
-const pageWrap=document.querySelector(".wrap");
-
-function checkPassword(){
-  const inputVal=pwdInput.value.trim();
-
-  if(inputVal===AccessPassword){
-    pwdMask.style.display="none";
-    pageWrap.style.display="block";
-    errTip.style.display="none";
-  }else{
-    errTip.style.display="block";
-    pwdInput.value="";
-    pwdInput.focus();
-  }
-}
-
-// 点击确认
-submitPwd.addEventListener("click",function(){
-  checkPassword();
-});
-
-// 回车快捷登录
-pwdInput.addEventListener("keydown",function(e){
-  if(e.key==="Enter"){
-    e.preventDefault();
-    checkPassword();
-  }
-});
-
-// 点击弹窗空白区域取消焦点
-pwdMask.addEventListener("click",function(e){
-  if(e.target===this){
-    pwdInput.blur();
-  }
-});
-</script>
 
 <!-- 统计脚本 -->
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
